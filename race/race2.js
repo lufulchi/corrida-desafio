@@ -56,7 +56,13 @@ function renderNova(){
   var pos=posicoes(rows,"v"),temOntem=rows.some(function(x){return x.ontem!=null}),posOntem=temOntem?posicoes(rows,"ontem"):null;
   // placar
   var ph=['<span class="vivo">ao vivo</span>'];
-  if(CORRIDA.atualizadoEm)ph.push('<span>atualizado em '+esc(new Date(CORRIDA.atualizadoEm).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}))+'</span>');
+  if(CORRIDA.atualizadoEm){
+    // a rotina republica no minuto 40 de cada hora e leva ~2-5 min: a próxima versão chega por volta do minuto 45
+    var prox=new Date();prox.setMinutes(45,0,0);if(prox<=new Date())prox.setHours(prox.getHours()+1);
+    var fimC=dia(CONFIG.fim);if(fimC)fimC.setHours(23,59,59,0);
+    ph.push('<span>atualizado em '+esc(new Date(CORRIDA.atualizadoEm).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}))+
+      (fimC&&new Date()>fimC?'':' · próxima atualização por volta das '+esc(prox.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})))+'</span>');
+  }
   document.getElementById("n-placar").innerHTML=ph.join("");
   // pista inteira, de 0 a 1.000, em escala fixa: arrasta para os lados para ver todo mundo
   var sc=document.getElementById("n-scroll"),turfe=document.getElementById("n-turfe"),vw=sc.clientWidth,visivel=vw>0;
@@ -123,5 +129,5 @@ var original=renderCorrida;
 renderCorrida=function(){original.apply(this,arguments);try{renderNova()}catch(e){}};
 try{renderNova()}catch(e){}
 var t=null;window.addEventListener("resize",function(){clearTimeout(t);t=setTimeout(function(){try{renderNova()}catch(e){}},150)});
-window.addEventListener("hashchange",function(){if(location.hash==="#nova")setTimeout(function(){try{renderNova()}catch(e){}},30)});
+window.addEventListener("hashchange",function(){if(!location.hash||location.hash==="#corrida"||location.hash==="#nova")setTimeout(function(){try{renderNova()}catch(e){}},30)});
 })();

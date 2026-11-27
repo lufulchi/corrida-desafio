@@ -514,24 +514,7 @@ footer img{width:72px;height:auto}
   </div>
 </section>
 
-<section class="corrida" id="corrida" data-aba="corrida">
-  <div class="wrap">
-    <div class="tit"><h2>a <em>corrida.</em></h2><p>quantos leitores cada pessoa já trouxe com os seus anúncios. quem cruzar a linha de chegada garante as 3 latas.</p></div>
-    <div class="placar" id="placar"></div>
-    <div class="podio" id="podio"></div>
-    <div class="pista-wrap">
-      <div class="pista-topo"><span class="pista-dia" id="pista-dia"></span><span class="marcas" id="marcas"></span></div>
-      <div class="pista" id="pista" role="img" aria-label="corrida de cavalinhos com os leitores trazidos por cada pessoa"><div class="chegada" aria-hidden="true"></div><div class="faixas" id="faixas"></div></div>
-      <button class="ver-todos" id="ver-todos" hidden></button>
-    </div>
-    <div class="resumo" id="resumo"></div>
-    <p class="nota">a contagem são as inscrições que o Meta atribui a cada anúncio, em qualquer campanha em que ele estiver rodando. os números são atualizados ao longo da apuração e podem mudar um pouco, porque o Meta leva algumas horas para atribuir cada inscrição ao anúncio certo.</p>
-  </div>
-</section>
-
-
-
-<section class="corrida corrida2" id="nova" data-aba="nova">
+<section class="corrida corrida2" id="corrida" data-aba="corrida">
   <div class="wrap">
     <div class="tit"><h2>a <em>corrida.</em></h2><p>quantos leitores cada pessoa já trouxe com os seus anúncios. quem cruzar a linha de chegada garante as 3 latas.</p></div>
     <div class="placar" id="n-placar"></div>
@@ -550,6 +533,8 @@ footer img{width:72px;height:auto}
     <p class="nota">a contagem são as inscrições que o Meta atribui a cada anúncio, em qualquer campanha em que ele estiver rodando. os números podem mudar um pouco ao longo do dia, porque o Meta leva algumas horas para atribuir cada inscrição ao anúncio certo.</p>
   </div>
 </section>
+
+
 
 <footer><div class="wrap"><span>dúvidas? se for sobre como gravar o anúncio, fala com a Manu ou com a Gabi. se for sobre a mecânica, fala com a Lu.</span><img src="/_blob/b2c573c77ba6cd3c1cf9c0671a4c14af" alt="tns"></div></footer>
 
@@ -912,7 +897,7 @@ async function resolverPerfis(){
 /* ---------- abas ---------- */
 var ABAS=["corrida","desafio"],SECOES={premio:1,funciona:1,briefing:1,participar:1,time:1,inscricao:1,inicio:1};
 function mostrar(){
-  var h=decodeURIComponent(location.hash.slice(1)),aba=h==="nova"?"nova":(h==="desafio"||SECOES[h])?"desafio":"corrida";
+  var h=decodeURIComponent(location.hash.slice(1)),aba=(h==="desafio"||SECOES[h])?"desafio":"corrida";
   Array.prototype.forEach.call(document.querySelectorAll("[data-aba]"),function(el){el.classList.toggle("ativa",el.getAttribute("data-aba")===aba)});
   Array.prototype.forEach.call(document.querySelectorAll(".abas a"),function(a){if(a.getAttribute("href")==="#"+aba)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
   var el=SECOES[h]&&h!=="inicio"?$(h):null;
@@ -1001,7 +986,13 @@ function renderNova(){
   var pos=posicoes(rows,"v"),temOntem=rows.some(function(x){return x.ontem!=null}),posOntem=temOntem?posicoes(rows,"ontem"):null;
   // placar
   var ph=['<span class="vivo">ao vivo</span>'];
-  if(CORRIDA.atualizadoEm)ph.push('<span>atualizado em '+esc(new Date(CORRIDA.atualizadoEm).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}))+'</span>');
+  if(CORRIDA.atualizadoEm){
+    // a rotina republica no minuto 40 de cada hora e leva ~2-5 min: a próxima versão chega por volta do minuto 45
+    var prox=new Date();prox.setMinutes(45,0,0);if(prox<=new Date())prox.setHours(prox.getHours()+1);
+    var fimC=dia(CONFIG.fim);if(fimC)fimC.setHours(23,59,59,0);
+    ph.push('<span>atualizado em '+esc(new Date(CORRIDA.atualizadoEm).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}))+
+      (fimC&&new Date()>fimC?'':' · próxima atualização por volta das '+esc(prox.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})))+'</span>');
+  }
   document.getElementById("n-placar").innerHTML=ph.join("");
   // pista inteira, de 0 a 1.000, em escala fixa: arrasta para os lados para ver todo mundo
   var sc=document.getElementById("n-scroll"),turfe=document.getElementById("n-turfe"),vw=sc.clientWidth,visivel=vw>0;
@@ -1068,7 +1059,7 @@ var original=renderCorrida;
 renderCorrida=function(){original.apply(this,arguments);try{renderNova()}catch(e){}};
 try{renderNova()}catch(e){}
 var t=null;window.addEventListener("resize",function(){clearTimeout(t);t=setTimeout(function(){try{renderNova()}catch(e){}},150)});
-window.addEventListener("hashchange",function(){if(location.hash==="#nova")setTimeout(function(){try{renderNova()}catch(e){}},30)});
+window.addEventListener("hashchange",function(){if(!location.hash||location.hash==="#corrida"||location.hash==="#nova")setTimeout(function(){try{renderNova()}catch(e){}},30)});
 })();
 </script>
 </body>

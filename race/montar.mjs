@@ -14,7 +14,10 @@ const trocar = (ini, fim, novo, nome) => {
 };
 if (!h.includes('/*CORRIDA-INICIO*/')) {
   trocar('.corrida{background:var(--soft)}', '\n.org table', ler('race.css'), 'css');
-  trocar('<section class="corrida"', '\n\n\n\n<footer>', ler('race-section.html').trimEnd(), 'section');
+  // 27/11: a pista única (race2) virou a corrida oficial; a de raias (race-section.html) saiu da página.
+  // O race.js continua porque a pista nova usa as funções dele (fotos do time, cores, pelagens).
+  trocar('<section class="corrida"', '\n\n\n\n<footer>',
+    ler('race2-section.html').trimEnd().replace('id="nova" data-aba="nova"', 'id="corrida" data-aba="corrida"'), 'section');
   trocar('/* ---------- a apuração', '/* ---------- formulário', ler('race.js'), 'js');
 } else throw new Error('challenge.html já tem a corrida nova — monte a partir da fonte original');
 // ---- 2 abas (pedido da Luiza, 27/11): "a corrida" é a principal e abre direto nas pessoas, sem o topo;
@@ -31,17 +34,16 @@ sub('</style>', '.hero[data-aba]:not(.ativa){display:none!important}\n.hero[data
 trocar('var primeiraAba=true;', 'window.addEventListener("hashchange",mostrar);mostrar();',
   'var ABAS=["corrida","desafio"],SECOES={premio:1,funciona:1,briefing:1,participar:1,time:1,inscricao:1,inicio:1};\n' +
   'function mostrar(){\n' +
-  '  var h=decodeURIComponent(location.hash.slice(1)),aba=h==="nova"?"nova":(h==="desafio"||SECOES[h])?"desafio":"corrida";\n' +
+  '  var h=decodeURIComponent(location.hash.slice(1)),aba=(h==="desafio"||SECOES[h])?"desafio":"corrida";\n' +
   '  Array.prototype.forEach.call(document.querySelectorAll("[data-aba]"),function(el){el.classList.toggle("ativa",el.getAttribute("data-aba")===aba)});\n' +
   '  Array.prototype.forEach.call(document.querySelectorAll(".abas a"),function(a){if(a.getAttribute("href")==="#"+aba)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});\n' +
   '  var el=SECOES[h]&&h!=="inicio"?$(h):null;\n' +
   '  if(el)requestAnimationFrame(function(){el.scrollIntoView({block:"start"})});else window.scrollTo(0,0);\n' +
   '  if(aba==="corrida")renderCorrida();\n' +
   '}\n', 'navegação');
-// ---- prévia #nova (27/11, para a Luiza aprovar): fora do menu, só abre por #nova. Script em bloco próprio.
-if (fs.existsSync(path.join(aqui, 'race2.js'))) {
-  sub('<footer>', ler('race2-section.html').trimEnd() + '\n\n<footer>', 'prévia: seção');
-  sub('</style>', ler('race2.css') + '</style>', 'prévia: estilo');
+// ---- pista única (aprovada pela Luiza em 27/11): estilo e script em bloco próprio (se o script falhar, o resto da página segue).
+{
+  sub('</style>', ler('race2.css') + '</style>', 'pista: estilo');
   const fimBody = h.lastIndexOf('</body>');
   h = h.slice(0, fimBody) + '<script>\n' + ler('race2.js') + '</script>\n' + h.slice(fimBody);
 }
