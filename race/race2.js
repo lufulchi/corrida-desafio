@@ -46,7 +46,7 @@ function renderNova(){
   document.getElementById("n-placar").innerHTML=ph.join("");
   // tamanhos
   var turfe=document.getElementById("n-turfe"),W=turfe.clientWidth||900,cel=W<600;
-  var cw=cel?66:100,ch=cw*.9,FILAS=cel?6:5,filaH=cel?54:80,topo=cel?26:34,margemD=cel?40:52;
+  var cw=cel?66:100,ch=cw*.9,FILAS=cel?8:7,filaH=cel?52:80,topo=cel?26:34,margemD=cel?40:52;
   var H=topo+FILAS*filaH+ch-filaH+30;turfe.style.setProperty("--th",H+"px");
   var util=W-cw-margemD;
   // marcas e chegada
@@ -57,8 +57,8 @@ function renderNova(){
   document.getElementById("n-escala").textContent=max>=meta?"reta final: a régua já vai até a linha de chegada":"a régua acompanha quem está na frente e cresce até "+mil(meta);
   document.getElementById("n-meta").textContent="🏁 "+mil(meta)+" leitores = 3 latas";
   // pelotão: cada cavalo vai para a fileira onde fica mais longe do último cavalo daquela fileira
-  var ultimo=[],gap=cw*.62;for(var r=0;r<FILAS;r++)ultimo.push(-1e9);
-  var vivos={};
+  var ultimo=[],gap=cel?cw*1.15:135;for(var r=0;r<FILAS;r++)ultimo.push(-1e9);
+  var vivos={},placas=[];
   rows.forEach(function(x,i){
     var px=Math.min(1,x.v/max)*util,melhor=0,dist=-1;
     for(var r=0;r<FILAS;r++){var d=Math.abs(ultimo[r]-px);if(d>=gap){melhor=r;dist=1e9;break}if(d>dist){dist=d;melhor=r}}
@@ -82,9 +82,14 @@ function renderNova(){
     var esc0=el.querySelector(".escudo");if(esc0.dataset.f!==foto){esc0.innerHTML=foto;esc0.dataset.f=foto}
     el.querySelector(".placa").innerHTML=esc(x.nome)+'<i>'+mil(x.v)+'</i>';
     el.setAttribute("aria-label",x.nome+": "+mil(x.v)+" leitores");
+    // os nomes dos 5 primeiros vão numa camada por cima de todos os cavalos (senão a cabeça da fileira de baixo cobre)
+    if(i<5)placas.push('<span class="placa-fixa'+(i===0&&x.v>0?' p1':'')+'" style="transform:translate('+(px+cw/2)+'px,'+(y+ch*esc_+2)+'px) translateX(-50%)">'+esc(x.nome)+'<i>'+mil(x.v)+'</i></span>');
     vivos[x.id]=1;
   });
   Object.keys(nos).forEach(function(id){if(!vivos[id]){nos[id].remove();delete nos[id]}});
+  var camada=document.getElementById("n-placas");
+  if(!camada){camada=document.createElement("div");camada.id="n-placas";camada.className="turfe-placas";turfe.appendChild(camada)}
+  camada.innerHTML=placas.join("");
   // lista com todo mundo
   var lista=document.getElementById("n-lista");lista.style.setProperty("--linhas",Math.ceil(rows.length/2));
   lista.innerHTML=rows.map(function(x,i){
