@@ -273,14 +273,14 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 140px)}
 .pf.lider .nome .n,.pf.ganhou .nome i{color:var(--amarelo);font-weight:900}
 .trilho{position:relative;height:100%}
 .trilho .guia{position:absolute;top:8px;bottom:8px;border-left:1px solid #1f1f1f}
-.rastro{position:absolute;left:0;top:50%;height:6px;margin-top:12px;border-radius:99px;width:calc((100% - 72px) * var(--p,0) + 30px);background:linear-gradient(90deg,rgba(255,142,66,0),var(--cor,#FFCD00));opacity:.55;transition:width 1s cubic-bezier(.3,.1,.2,1)}
-.cav{position:absolute;top:calc(50% - 20px);width:72px;height:48px;left:calc((100% - 72px) * var(--p,0));transition:left 1s cubic-bezier(.3,.1,.2,1)}
-.cav .eq{width:72px;height:48px;display:block;overflow:visible}
-.cav .piloto{position:absolute;left:12px;top:-30px;width:44px;height:44px;z-index:2}
+.rastro{position:absolute;left:0;top:50%;height:6px;margin-top:12px;border-radius:99px;width:calc((100% - 100px) * var(--p,0) + 40px);background:linear-gradient(90deg,rgba(255,142,66,0),var(--cor,#FFCD00));opacity:.55;transition:width 1s cubic-bezier(.3,.1,.2,1)}
+.cav{position:absolute;top:calc(50% - 30px);width:100px;height:70px;left:calc((100% - 100px) * var(--p,0));transition:left 1s cubic-bezier(.3,.1,.2,1)}
+.cav .eq{width:100px;height:70px;display:block;overflow:visible}
+.cav .piloto{position:absolute;left:29px;top:-20px;width:40px;height:40px;z-index:2}
 .cav .piloto .adesivo .ini{font-size:12px;border-width:3px}
 .cav .piloto .adesivo img{border-width:3px;border-color:#2b2b2b}
 .cav .piloto .adesivo img.recorte{filter:drop-shadow(2px 0 0 #3a3a3a) drop-shadow(-2px 0 0 #3a3a3a) drop-shadow(0 2px 0 #3a3a3a) drop-shadow(0 -2px 0 #3a3a3a);object-position:center bottom}
-.eq .p1{transform-origin:57px 32px}.eq .p2{transform-origin:51px 32px}.eq .p3{transform-origin:28px 32px}.eq .p4{transform-origin:22px 32px}
+.eq .p1{transform-origin:63px 43px}.eq .p2{transform-origin:58px 44px}.eq .p3{transform-origin:35px 45px}.eq .p4{transform-origin:30px 44px}
 .correndo .eq{animation:pula .36s ease-in-out infinite}
 .correndo .p1,.correndo .p4{animation:pata .36s linear infinite}
 .correndo .p2,.correndo .p3{animation:pata .36s linear infinite reverse}
@@ -300,6 +300,7 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 140px)}
 .resumo{grid-template-columns:1fr}.resumo div{display:flex;align-items:baseline;gap:10px}
 .pista-topo .marcas span:not(:last-child){display:none}
 }
+.corrida .tit p{max-width:52rem;text-wrap:pretty}
 
 .org table{width:100%;border-collapse:collapse;font-size:15px}
 .org .tab{overflow-x:auto}
@@ -434,7 +435,7 @@ footer img{width:72px;height:auto}
 
 <section class="corrida" id="corrida" data-aba="corrida">
   <div class="wrap">
-    <div class="tit"><h2>a <em>corrida.</em></h2><p>quantos leitores cada pessoa já trouxe com os seus anúncios, somando todos os lugares em que eles aparecem. quem cruzar a linha de chegada garante as 3 latas.</p></div>
+    <div class="tit"><h2>a <em>corrida.</em></h2><p>quantos leitores cada pessoa já trouxe com os seus anúncios. quem cruzar a linha de chegada garante as 3 latas.</p></div>
     <div class="placar" id="placar"></div>
     <div class="podio" id="podio"></div>
     <div class="pista-wrap">
@@ -606,23 +607,37 @@ function rostoDe(r){
   var m=(r.membros&&r.membros[0])||{nome:r.nome};
   return rostoHtml({nome:m.nome,id:m.id,recorteId:m.recorteId,fotoId:m.fotoId,demo:!m.id});
 }
-var pista={lanes:{},rodando:false,timer:null,todos:false},LH=76,VISIVEIS=12;
+var pista={lanes:{},rodando:false,timer:null,todos:false},LH=92,VISIVEIS=12;
 var CORES_CAV=["#FFCD00","#FF8E42","#6A98FF","#00BF63","#F742A1","#2AA0A7","#f2f2f2","#C49A00"];
 function hashId(id){var h=0;String(id).split("").forEach(function(c){h=(h*31+c.charCodeAt(0))>>>0});return h}
 function corCavalo(id){return CORES_CAV[hashId(id)%CORES_CAV.length]}
-function cavaloSvg(cor){
-  return '<svg class="eq" viewBox="0 0 90 60" aria-hidden="true"><g stroke="'+cor+'" stroke-width="4.5" stroke-linecap="round" fill="none"><path class="p1" d="M57 32 L59 56"/><path class="p2" d="M51 32 L49 56"/><path class="p3" d="M28 32 L24 56"/><path class="p4" d="M22 32 L15 54"/></g>'+
-    '<path d="M17 22 C6 19 1 30 6 44" stroke="'+cor+'" stroke-width="4" fill="none" stroke-linecap="round"/>'+
-    '<ellipse cx="39" cy="26" rx="25" ry="9.5" fill="'+cor+'"/>'+
-    '<path d="M54 22 L64 5 L72 8 L66 30 Z" fill="'+cor+'"/>'+
-    '<path d="M65 5 L81 9 L85 18 L80 20 L71 14 Z" fill="'+cor+'"/>'+
-    '<path d="M65 5 L67 -1 L70 6 Z" fill="'+cor+'"/>'+
-    '<circle cx="73" cy="9.5" r="1.6" fill="#000"/></svg>';
+// cavalo de desenho animado: pelagem (corpo, sombra, crina, focinho) varia por pessoa; a manta leva a cor da pessoa
+var PELAGENS=[["#9A5B2E","#7A4521","#3B2414","#C98A5E"],["#B5713A","#8E5528","#4A2C16","#E0A878"],["#6B4226","#53321C","#24160C","#9C6B4A"],
+  ["#3A2B22","#2A1F18","#0F0B08","#6A5548"],["#EDE3D3","#CDBFA9","#8A7A66","#F7EFE3"],["#C9A27A","#A9845F","#5C4430","#E6C7A5"]];
+function cavaloSvg(cor,id){
+  var P=PELAGENS[(hashId(id||cor)>>>3)%PELAGENS.length],c=P[0],s=P[1],m=P[2],f=P[3];
+  var perna=function(cls,x1,y1,x2,y2,tom){return '<g class="'+cls+'"><path d="M'+x1+' '+y1+' L'+x2+' '+y2+'" stroke="'+tom+'" stroke-width="5.5" stroke-linecap="round"/><rect x="'+(x2-3.4)+'" y="'+(y2-1)+'" width="6.8" height="4" rx="1.6" fill="#1c1c1c"/></g>'};
+  return '<svg class="eq" viewBox="0 0 100 70" aria-hidden="true">'+
+    '<path d="M25 31 C11 27 6 42 11 55 C13 47 17 42 22 41 C19 47 20 52 23 56 C25 47 26 40 29 36 Z" fill="'+m+'"/>'+   // rabo
+    perna("p4",30,44,27,62,s)+perna("p2",58,44,61,62,s)+                                                              // pernas de trás (longe)
+    '<ellipse cx="46" cy="37" rx="25" ry="12.5" fill="'+c+'"/>'+                                                        // corpo
+    '<ellipse cx="44" cy="30" rx="15" ry="3.2" fill="#fff" opacity=".16"/>'+                                            // brilho
+    '<path d="M60 33 L69 11 Q76 4 83 9 L75 41 Z" fill="'+c+'"/>'+                                                       // pescoço
+    '<path d="M71 9 Q80 1 90 9 Q97 15 94 21 Q91 24 85 22 L76 19 Z" fill="'+c+'"/>'+                                    // cabeça
+    '<ellipse cx="91.5" cy="18.5" rx="4.6" ry="3.6" fill="'+f+'"/><circle cx="92.8" cy="17.6" r=".9" fill="'+m+'"/>'+   // focinho
+    '<path d="M74 7 L75.5 -1 L80 6 Z" fill="'+c+'"/><path d="M75.4 5.6 L76 1.4 L78.2 5.2 Z" fill="'+f+'"/>'+            // orelha
+    '<path d="M70.5 5 Q62 13 59 31 L65 29 Q67 18 72 12 Q71 9 76 6 Z" fill="'+m+'"/>'+                                   // crina
+    '<path d="M74 5 Q78 1 82 4 Q78 4 77 8 Z" fill="'+m+'"/>'+                                                           // topete
+    '<circle cx="82.5" cy="11.5" r="2.5" fill="#fff"/><circle cx="83.3" cy="11.8" r="1.4" fill="#111"/><circle cx="83.7" cy="11.2" r=".45" fill="#fff"/>'+ // olho
+    '<path d="M33 25.5 H59 Q61.5 25.5 61.5 28 V43.5 Q61.5 46 59 46 H33 Q30.5 46 30.5 43.5 V28 Q30.5 25.5 33 25.5 Z" fill="'+cor+'"/>'+ // manta
+    '<rect x="30.5" y="39.5" width="31" height="2.6" fill="#fff" opacity=".75"/><rect x="30.5" y="25.5" width="31" height="3" fill="#000" opacity=".12"/>'+
+    perna("p3",35,45,33,63,c)+perna("p1",63,43,65,63,c)+                                                              // pernas da frente (perto)
+    '</svg>';
 }
 function valorEm(r,k){if(k==null)return r.ult;if(!r.serie.length)return 0;return Number(r.serie[Math.min(k,r.serie.length-1)])||0}
 function ordenar(rows,k){return rows.map(function(r){return{r:r,v:valorEm(r,k)}}).sort(function(a,b){return b.v-a.v||String(a.r.nome).localeCompare(String(b.r.nome),"pt-BR")})}
 function desenharMarcas(meta){
-  $("marcas").innerHTML=[.25,.5,.75,1].map(function(f){return '<span style="left:calc((100% - 72px) * '+f+' + 36px)">'+(f===1?"🏁 "+mil(meta):mil(meta*f))+'</span>'}).join("");
+  $("marcas").innerHTML=[.25,.5,.75,1].map(function(f){return '<span style="left:calc((100% - 100px) * '+f+' + 50px)">'+(f===1?"🏁 "+mil(meta):mil(meta*f))+'</span>'}).join("");
 }
 function desenharPodio(vs,meta){
   var top=vs.slice(0,3);
@@ -648,8 +663,8 @@ function desenharPista(rows,meta,k,dias){
       var el=document.createElement("div");el.className="pf";el.style.setProperty("--lh",LH+"px");
       var cor=corCavalo(id);
       el.innerHTML='<div class="nome"><span class="n"></span><b></b><i></i></div><div class="trilho">'+
-        [.25,.5,.75].map(function(f){return '<span class="guia" style="left:calc((100% - 72px) * '+f+' + 36px)"></span>'}).join("")+
-        '<span class="rastro" style="--cor:'+cor+'"></span><div class="cav" style="--p:0"><span class="piloto"></span>'+cavaloSvg(cor)+'</div></div>';
+        [.25,.5,.75].map(function(f){return '<span class="guia" style="left:calc((100% - 100px) * '+f+' + 50px)"></span>'}).join("")+
+        '<span class="rastro" style="--cor:'+cor+'"></span><div class="cav" style="--p:0"><span class="piloto"></span>'+cavaloSvg(cor,id)+'</div></div>';
       el.style.transform="translateY("+(i*LH)+"px)";
       box.appendChild(el);
       L={el:el,n:el.querySelector(".nome .n"),nome:el.querySelector(".nome b"),pts:el.querySelector(".nome i"),cav:el.querySelector(".cav"),rastro:el.querySelector(".rastro"),piloto:el.querySelector(".piloto"),foto:"",p:-1,t:null};
