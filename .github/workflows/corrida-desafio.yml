@@ -5,8 +5,8 @@
 name: Corrida do desafio
 
 on:
-  schedule:
-    - cron: '7 * * * *'
+  # 27/11: o agendamento do GitHub nao disparava neste repo novo; quem atualiza de hora em hora agora e a
+  # rotina do Claude na nuvem (busca no Meta, monta e publica). Aqui fica so o disparo manual.
   workflow_dispatch:
 
 concurrency:
