@@ -1,0 +1,43 @@
+# Placar do Super Team Creator Challenge (pedido da Luiza, 27/11/2026): de hora em hora puxa do Meta as
+# inscricoes (pixel) de cada anuncio do desafio, em qualquer campanha, e monta challenge-race.html.
+# Uma rotina do Claude na nuvem (minuto 25) le esse HTML e republica no artefato do desafio.
+# Minuto 7: fora da hora cheia, quando o GitHub descarta rodada agendada. So LE o Meta.
+name: Corrida do desafio
+
+on:
+  schedule:
+    - cron: '7 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: corrida-desafio
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  placar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TZ: America/Sao_Paulo
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Placar e pagina
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          META_AD_ACCOUNT_ID: ${{ secrets.META_AD_ACCOUNT_ID }}
+        run: |
+          node placar-desafio.mjs
+          node race/montar.mjs --menu
+      - name: Guardar no repositorio
+        run: |
+          git config user.name "regra-cac-bot"
+          git config user.email "regra-cac-bot@users.noreply.github.com"
+          git add corrida.json challenge-race.html
+          git diff --cached --quiet || git commit -m "corrida do desafio $(date '+%d/%m %H:%M')"
+          git push || (git pull --rebase && git push)

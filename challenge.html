@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SUPER TEAM CREATOR CHALLENGE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;700;800;900&display=swap">
+<style>
+:root{
+  --bg:#ffffff;--fg:#000000;--muted:#555555;--soft:#f2f2f2;--line:#e2e2e2;--card:#ffffff;--recorte:#E0E0E0;
+  --amarelo:#FFCD00;--laranja:#FF8E42;--grad:linear-gradient(to right,#FF8E42,#FFCD00);--ok:#0a7a3a;--bad:#b42318;--grade:#e6e6e6;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#000000;--fg:#ffffff;--muted:#bdbdbd;--soft:#141414;--line:#2a2a2a;--card:#0d0d0d;--ok:#4ade80;--bad:#f87171;--grade:#262626}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#000000;--fg:#ffffff;--muted:#bdbdbd;--soft:#141414;--line:#2a2a2a;--card:#0d0d0d;--ok:#4ade80;--bad:#f87171;--grade:#262626}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Helvetica Now Display","Inter Tight","Helvetica Neue",Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg);line-height:1.45;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:inherit}
+img{display:block;max-width:100%}
+:focus-visible{outline:3px solid var(--laranja);outline-offset:3px}
+.wrap{max-width:72rem;margin:0 auto;padding:0 24px}
+.logo-escuro{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo-claro{display:none}:root:not([data-theme="light"]) .logo-escuro{display:block}}
+:root[data-theme="dark"] .logo-claro{display:none}:root[data-theme="dark"] .logo-escuro{display:block}
+
+section{padding:96px 0}
+.tit{margin-bottom:44px}
+.tit h2{font-size:clamp(46px,7.4vw,96px);line-height:.95;font-weight:900;letter-spacing:-.055em}
+.tit p{margin-top:16px;text-wrap:balance}
+.tit p{font-size:clamp(18px,2vw,22px);font-weight:300;margin-top:14px;max-width:36rem}
+
+.btn{display:inline-block;font:inherit;font-weight:700;font-size:18px;border-radius:999px;padding:15px 30px;text-decoration:none;cursor:pointer;border:0;color:#000}
+.btn.main{background:var(--grad)}
+.btn.main:hover{filter:brightness(1.05)}
+.btn.main[disabled]{opacity:.5;cursor:wait}
+.btn.line{background:none;color:var(--fg);box-shadow:inset 0 0 0 2px var(--fg)}
+.btn.line:hover{background:var(--amarelo);color:#000;box-shadow:inset 0 0 0 2px var(--amarelo)}
+
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+.nav .logo img{height:34px;width:auto}
+.nav .btn{padding:10px 20px;font-size:15px}
+.abas{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);z-index:19;background:var(--bg);border-bottom:1px solid var(--line)}
+.abas .wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding-top:18px;padding-bottom:24px}
+.abas a{flex:none;text-decoration:none;font-weight:700;font-size:16px;padding:10px 18px;border-radius:999px;box-shadow:inset 0 0 0 2px var(--line)}
+@media(max-width:759px){
+.abas .wrap{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;gap:8px;padding-top:10px;padding-bottom:12px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.abas .wrap::-webkit-scrollbar{display:none}
+.abas a{font-size:15px;padding:8px 14px;white-space:nowrap}
+.nav .wrap{height:60px}.nav .logo img{height:28px}.nav .btn{white-space:nowrap;padding:9px 16px;font-size:14px}
+.abas{top:calc(env(safe-area-inset-top,0px) + 60px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 120px)}
+section{padding:44px 0 56px}
+.tit{margin-bottom:28px}
+.tit h2{font-size:clamp(44px,13vw,60px)}
+.hero{padding:20px 0 28px}
+.lata{max-width:300px}
+.premio .grid{gap:28px}
+}
+.abas a:hover{box-shadow:inset 0 0 0 2px var(--fg)}
+.abas a[aria-current="page"]{background:var(--fg);color:var(--bg);box-shadow:none}
+[data-aba]{display:none}
+[data-aba].ativa{display:block}
+[hidden]{display:none!important}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 140px)}
+
+.faixa{background:#000;color:#fff;font-size:16px}
+.faixa .wrap{display:flex;align-items:center;gap:14px;min-height:48px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+.faixa b{background:var(--amarelo);color:#000;font-weight:800;padding:3px 10px;letter-spacing:.02em}
+.faixa span{font-weight:300}
+
+.hero{padding:24px 0;overflow:hidden;display:flex;align-items:center;min-height:min(calc(100vh - 159px),600px);min-height:min(calc(100svh - 159px),600px)}
+.hero .wrap{width:100%;display:grid;gap:32px;align-items:center}
+@media(min-width:960px){.hero .wrap{grid-template-columns:1.15fr 1fr}}
+.hero h1{font-size:clamp(44px,min(8vw,15.5vh),120px);line-height:.86;font-weight:900;letter-spacing:-.05em}
+.hero p{font-size:clamp(18px,2vw,22px);font-weight:300;max-width:32rem;margin:20px 0 0}
+.hero p.mini{font-size:15px;margin-top:12px;color:var(--muted)}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.colagem{position:relative;height:clamp(150px,30vw,360px)}
+.colagem{height:clamp(150px,min(32vw,52vh),460px)}
+@media(max-width:759px){.hero .wrap{gap:16px}.colagem{height:200px;margin-top:4px}.colagem .meg{width:38%;left:2%;top:0}.colagem .cam{width:54%;right:2%;bottom:0}.colagem .estrela{left:44%;top:0;width:64px;height:64px}.hero{min-height:0}}
+.colagem .meg{position:absolute;left:0;top:0;width:62%;transform:rotate(-6deg)}
+.colagem .cam{position:absolute;right:0;bottom:2%;width:62%}
+.estrela{position:absolute;width:84px;height:84px}
+.colagem .estrela{left:56%;top:4%;transform:rotate(12deg)}
+@media(prefers-reduced-motion:no-preference){.colagem .cam{animation:clique 4.5s ease-in-out infinite}}
+@keyframes clique{0%,86%,100%{transform:rotate(0)}90%{transform:rotate(-3deg) scale(1.02)}94%{transform:rotate(2deg)}}
+
+.premio{background:#000;color:#fff}
+.premio .tit p{color:#d0d0d0}
+@media(min-width:900px){.premio .grid{grid-template-columns:1fr 1fr}}
+.lata{position:relative;aspect-ratio:1;max-width:440px;width:100%;margin:0 auto;display:grid;place-items:center}
+.lata .fundo{position:absolute;inset:6%;border-radius:50%;background:var(--amarelo)}
+.lata .lata3d{position:relative;height:86%;aspect-ratio:242/440;filter:drop-shadow(0 18px 24px rgba(0,0,0,.35))}
+.lata .lata3d canvas{display:block;width:100%;height:100%}
+.lata .trio{position:relative;width:96%;height:70%;display:flex;align-items:flex-end;justify-content:center}
+.lata .trio .lata3d{height:76%;margin:0 -3%}
+.lata .trio .l2{height:100%;z-index:2}
+.lata .giro{position:relative;height:84%;aspect-ratio:242/440;transform-style:preserve-3d}
+.lata .giro img{position:absolute;inset:0;width:100%;height:100%;-webkit-backface-visibility:hidden;backface-visibility:hidden;filter:drop-shadow(0 18px 24px rgba(0,0,0,.35))}
+.lata .giro .verso{transform:rotateY(180deg)}
+@media(prefers-reduced-motion:no-preference){.lata .giro{animation:gira 4s linear infinite}}
+.lata img{position:relative;height:88%;width:auto;filter:drop-shadow(0 18px 24px rgba(0,0,0,.35))}
+@keyframes gira{0%{transform:perspective(900px) rotateY(0)}100%{transform:perspective(900px) rotateY(360deg)}}
+.lata .vaga{position:relative;width:62%;aspect-ratio:1;border:3px dashed #000;border-radius:24px;display:grid;place-items:center;text-align:center;color:#000;font-size:17px;padding:20px}
+.lata .estrela{right:2%;top:0;transform:rotate(-10deg)}
+.conta{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-bottom:24px}
+.conta .a{background:#fff;color:#000;font-weight:900;font-size:clamp(28px,3.4vw,44px);letter-spacing:-.04em;padding:4px 16px}
+.conta .b{background:var(--amarelo);color:#000;font-weight:900;font-size:clamp(28px,3.4vw,44px);letter-spacing:-.04em;padding:4px 20px;border-radius:999px}
+.conta .ig{font-size:34px;font-weight:300}
+.premio .texto{font-size:20px;font-weight:300;max-width:30rem}
+.premio .mini{font-size:14px;font-weight:300;color:#b5b5b5;max-width:30rem;margin-top:12px}
+.plus{margin-top:28px;max-width:30rem;background:var(--amarelo);color:#000;padding:18px 22px;border-radius:16px;display:grid;gap:4px}
+.plus b{font-size:22px;font-weight:900;letter-spacing:-.03em}
+.plus span{font-size:18px;font-weight:400;line-height:1.3}
+.premio .grid{display:grid;gap:40px;align-items:center}
+.funciona .cols{display:grid;gap:28px}
+.funciona .cols>div{border-top:3px solid var(--fg);padding-top:16px}
+.funciona b{display:block;font-size:24px;font-weight:900;letter-spacing:-.025em;margin-bottom:8px}
+.funciona p{font-size:18px;font-weight:300}
+.funciona .fecho{margin-top:40px;padding:24px 28px;background:var(--soft);font-size:clamp(19px,2vw,22px);max-width:44rem}
+.funciona .fecho strong{font-weight:900;letter-spacing:-.02em}
+.letrinha{font-size:13px;color:var(--muted);margin:-40px 0 48px;max-width:40rem}
+@media(min-width:900px){.funciona .cols{grid-template-columns:repeat(2,1fr);gap:36px 40px}}
+
+.passos{list-style:none;display:grid;gap:28px;counter-reset:p;margin-bottom:56px}
+@media(min-width:800px){.passos{grid-template-columns:repeat(3,1fr)}}
+.passos li{counter-increment:p;border-top:3px solid var(--fg);padding-top:18px}
+.passos li::before{content:counter(p);display:block;font-size:64px;line-height:1;font-weight:900;letter-spacing:-.04em;margin-bottom:10px}
+.passos b{display:block;font-size:22px;letter-spacing:-.02em;margin-bottom:4px}
+.passos span{font-weight:300;font-size:17px}
+.datas{display:grid;gap:12px;grid-template-columns:repeat(2,1fr);margin-bottom:56px}
+@media(min-width:800px){.datas{grid-template-columns:repeat(4,1fr)}}
+.datas div{background:var(--soft);padding:18px 20px}
+.datas b{display:block;font-size:30px;font-weight:900;letter-spacing:-.03em}
+.datas span{font-weight:300;font-size:15px}
+
+.form{max-width:42rem;border:3px solid var(--fg);padding:32px;background:var(--card);position:relative}
+.form h3{font-size:34px;font-weight:900;letter-spacing:-.035em;line-height:1}
+.form .sub{font-weight:300;margin:8px 0 24px}
+.quem{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding:12px;background:var(--soft)}
+.quem img{width:44px;height:44px;border-radius:50%;object-fit:cover}
+.campo{margin-bottom:18px}
+.campo label{display:block;font-weight:700;margin-bottom:6px}
+.campo small{display:block;color:var(--muted);font-size:14px;margin-top:6px}
+.campo input[type=text],.campo input[type=url],.campo select{width:100%;font:inherit;font-size:16px;padding:13px 16px;border:2px solid var(--line);background:var(--bg);color:var(--fg)}
+.campo input:focus{border-color:var(--fg);outline:none}
+.check{display:flex;gap:10px;align-items:flex-start;margin-bottom:22px}
+.check input{margin-top:5px;width:18px;height:18px;accent-color:#FF8E42}
+.foto-prev{display:flex;align-items:center;gap:12px;margin-top:10px}
+.foto-prev img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:5px solid var(--recorte)}
+.msg{margin-top:14px;font-weight:700}
+.msg.erro{color:var(--bad)}.msg.ok{color:var(--ok)}
+.aviso{padding:16px 18px;background:var(--soft)}
+.item-ad{border:2px solid var(--line);padding:16px 16px 2px;margin-bottom:16px}
+.item-tit{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.item-tit b{font-size:18px;letter-spacing:-.02em}
+.item-tit .tira{font:inherit;font-size:14px;background:none;border:0;text-decoration:underline;cursor:pointer;color:var(--muted)}
+.pessoa .mais{font-weight:800;font-size:13px;background:var(--soft);padding:1px 8px;border-radius:999px}
+
+.regras{list-style:none;display:grid;gap:0;max-width:52rem;margin-bottom:64px}
+.regras li{font-size:clamp(19px,2vw,22px);font-weight:300;padding:18px 0;border-top:1px solid var(--line)}
+.regras li:last-child{border-bottom:1px solid var(--line)}
+.refs-tit{font-size:clamp(28px,3.4vw,40px);font-weight:900;letter-spacing:-.035em}
+.roteiro{list-style:none;counter-reset:r;display:grid;gap:16px;margin-bottom:72px;max-width:56rem}
+.roteiro li{counter-increment:r;display:grid;grid-template-columns:56px 1fr;column-gap:16px;padding:22px 0;border-top:1px solid var(--line)}
+.roteiro li::before{content:counter(r);grid-row:span 3;font-size:48px;font-weight:900;line-height:1;letter-spacing:-.04em}
+.roteiro b{font-size:22px;letter-spacing:-.02em}
+.roteiro p{font-weight:300;font-size:18px;margin:4px 0 12px}
+.roteiro blockquote{font-size:18px;font-weight:700;background:var(--soft);padding:16px 18px;border-radius:14px}
+.refs .tela{position:relative;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:9/12;background:#000;color:#fff;border-radius:14px;padding:18px;margin-bottom:12px;overflow:hidden}
+.refs .tela q{font-size:clamp(17px,1.7vw,21px);font-weight:900;letter-spacing:-.02em;line-height:1.15;quotes:"“" "”"}
+.refs .play{position:absolute;top:18px;left:18px;width:52px;height:52px;border-radius:50%;background:var(--amarelo)}
+.refs .play::after{content:"";position:absolute;left:21px;top:16px;border-left:16px solid #000;border-top:10px solid transparent;border-bottom:10px solid transparent}
+.refs a:hover .tela{background:#1a1a1a}
+.refs .tela.foto{padding:0;aspect-ratio:9/13}
+.refs .tela.foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.refs .tela.foto::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.18)}
+.refs .tela.foto .play{top:50%;left:50%;margin:-26px 0 0 -26px;z-index:1}
+.refs>a>q{font-size:15px;font-weight:300;line-height:1.3;margin:0 0 4px;quotes:"“" "”"}
+.refs-sub{font-weight:300;font-size:18px;margin:6px 0 20px}
+.refs{display:grid;gap:12px}
+@media(min-width:800px){.refs{grid-template-columns:repeat(3,1fr)}}
+.refs a{display:flex;flex-direction:column;gap:4px;text-decoration:none;padding:12px;border:2px solid var(--fg);border-radius:20px}
+.refs a:hover{background:var(--amarelo);border-color:var(--amarelo);color:#000}
+.refs a[aria-disabled]{border-style:dashed;border-color:var(--line);pointer-events:none}
+.refs b{font-size:19px;letter-spacing:-.02em}
+.refs span{font-size:14px;font-weight:300}
+.brief{display:grid;gap:28px}
+@media(min-width:800px){.brief{grid-template-columns:repeat(2,1fr)}}
+.brief div{border-top:3px solid var(--fg);padding-top:16px}
+.brief h3{font-size:24px;font-weight:900;letter-spacing:-.02em;margin-bottom:10px}
+.brief ul{padding-left:20px;font-weight:300;font-size:17px;display:grid;gap:6px}
+
+.adesivo{display:block;width:100%;height:100%}
+.adesivo img{width:100%;height:100%;object-fit:cover;border-radius:50%;border:6px solid var(--recorte);background:var(--recorte)}
+.adesivo img.recorte{object-fit:contain;border:0;border-radius:0;background:none;filter:drop-shadow(4px 0 0 var(--recorte)) drop-shadow(-4px 0 0 var(--recorte)) drop-shadow(0 4px 0 var(--recorte)) drop-shadow(0 -4px 0 var(--recorte))}
+.adesivo .ini{width:100%;height:100%;border-radius:50%;border:6px solid var(--recorte);background:#2b2b2b;color:#fff;display:grid;place-items:center;font-weight:900;font-size:30px}
+.grade{display:grid;gap:28px 16px;grid-template-columns:repeat(2,1fr)}
+@media(min-width:640px){.grade{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:1000px){.grade{grid-template-columns:repeat(5,1fr)}}
+.pessoa{text-align:center}
+.pessoa .rosto{width:132px;height:132px;margin:0 auto 12px}
+.pessoa:nth-child(3n+1) .rosto{transform:rotate(-3deg)}
+.pessoa:nth-child(3n+2) .rosto{transform:rotate(2deg)}
+.pessoa b{display:block;font-size:18px;letter-spacing:-.02em}
+.pessoa .area{font-size:14px;color:var(--muted)}
+.pessoa .ad{font-size:15px;font-weight:300;margin-top:4px}
+.pessoa.novo{animation:entra .6s ease-out}
+.pessoa .st{display:inline-block;margin-top:10px;font-size:13px;font-weight:800;padding:5px 12px;border-radius:999px}
+.pessoa .st.ok{background:#00BF63;color:#000}
+.pessoa .st.buu{background:var(--soft);color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
+.pessoa.falta .rosto{opacity:.45}
+.pessoa.falta b{color:var(--muted)}
+.contador{display:flex;flex-wrap:wrap;gap:10px;margin:-20px 0 36px}
+.contador span{font-weight:800;font-size:15px;padding:6px 14px;border-radius:999px}
+.contador .c-ok{background:#00BF63;color:#000}
+.contador .c-buu{background:var(--soft);box-shadow:inset 0 0 0 1px var(--line)}
+@keyframes entra{from{transform:scale(.8);opacity:0}}
+.vazio{grid-column:1/-1;padding:40px;border:2px dashed var(--line);text-align:center;font-weight:300}
+
+.corrida{background:var(--soft)}
+.placar{display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;margin-bottom:20px;font-size:16px}
+.vivo{display:inline-flex;align-items:center;gap:8px;font-weight:800;background:var(--fg);color:var(--bg);padding:5px 14px;border-radius:999px}
+.vivo::before{content:"";width:8px;height:8px;border-radius:50%;background:#ff3b30;animation:pisca 1.4s infinite}
+@keyframes pisca{50%{opacity:.25}}
+.selo{font-weight:700;background:var(--amarelo);color:#000;padding:5px 14px;border-radius:999px}
+.placar button{font:inherit;font-size:15px;font-weight:700;background:none;border:0;text-decoration:underline;cursor:pointer;color:var(--fg)}
+.grafico{overflow-x:auto;background:var(--bg);padding:24px 8px 8px}
+.grafico svg{display:block;width:100%;min-width:760px;height:auto;font-family:inherit}
+.resumo{display:flex;flex-wrap:wrap;gap:8px 32px;border-top:3px solid var(--fg);margin-top:24px;padding-top:16px;font-size:18px;font-weight:300}
+.resumo b{font-weight:900}
+.nota{font-size:14px;color:var(--muted);margin-top:12px}
+
+
+.pista-wrap{background:var(--bg);padding:18px 18px 14px;border:3px solid var(--fg)}
+.pista-topo{display:flex;justify-content:flex-end;min-height:22px;font-weight:800;font-size:15px;margin-bottom:4px}
+.pista{position:relative;padding-right:30px;min-height:132px;transition:height .6s ease}
+.faixas{position:absolute;left:0;right:30px;top:56px}
+.pf{position:absolute;left:0;right:0;height:76px;display:grid;grid-template-columns:var(--nomew,132px) 1fr;align-items:center;transition:transform .9s cubic-bezier(.4,0,.2,1)}
+.pf::after{content:"";position:absolute;left:0;right:0;bottom:0;border-bottom:2px dashed var(--line)}
+.pf.lider{background:linear-gradient(90deg,rgba(255,205,0,.28),rgba(255,205,0,0) 70%)}
+.pf .nome{display:flex;flex-direction:column;line-height:1.15;padding-right:8px;min-width:0}
+.pf .nome b{font-size:17px;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pf .nome i{font-style:normal;font-size:14px;font-weight:300;color:var(--muted)}
+.pf.ganhou .nome i{color:var(--fg);font-weight:900}
+.trilho{position:relative;height:100%}
+.cav{position:absolute;top:24px;width:72px;height:48px;left:calc((100% - 72px) * var(--p,0));transition:left 1s cubic-bezier(.3,.1,.2,1)}
+.cav .eq{width:72px;height:48px;display:block;overflow:visible}
+.cav .piloto{position:absolute;left:6px;top:-46px;width:60px;height:60px;z-index:2}
+.cav .piloto .adesivo .ini{font-size:13px;border-width:3px}
+.cav .piloto .adesivo img{border-width:3px}
+.cav .piloto .adesivo img.recorte{filter:drop-shadow(2px 0 0 var(--recorte)) drop-shadow(-2px 0 0 var(--recorte)) drop-shadow(0 2px 0 var(--recorte)) drop-shadow(0 -2px 0 var(--recorte));object-position:center bottom}
+.eq .p1{transform-origin:57px 32px}.eq .p2{transform-origin:51px 32px}.eq .p3{transform-origin:28px 32px}.eq .p4{transform-origin:22px 32px}
+.correndo .eq{animation:pula .36s ease-in-out infinite}
+.correndo .p1,.correndo .p4{animation:pata .36s linear infinite}
+.correndo .p2,.correndo .p3{animation:pata .36s linear infinite reverse}
+@keyframes pula{50%{transform:translateY(-3px)}}
+@keyframes pata{0%,100%{transform:rotate(-26deg)}50%{transform:rotate(26deg)}}
+.chegada{position:absolute;right:0;top:56px;bottom:0;width:24px;background:repeating-conic-gradient(#000 0 25%,#fff 0 50%) 0 0/12px 12px;border:2px solid var(--fg)}
+.chegada-rot{position:absolute;right:0;top:0;background:#000;color:var(--amarelo);font-weight:800;font-size:14px;padding:4px 12px;white-space:nowrap}
+@media(max-width:600px){.pf{--nomew:92px}.pf .nome b{font-size:15px}.pista-wrap{padding:14px 10px 10px}.chegada-rot{font-size:12px}}
+
+.org table{width:100%;border-collapse:collapse;font-size:15px}
+.org .tab{overflow-x:auto}
+.org th,.org td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.org th{color:var(--muted);font-weight:400}
+
+footer{border-top:20px solid transparent;border-image:var(--grad) 1;padding:40px 0}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-weight:300}
+footer img{width:72px;height:auto}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#inicio" aria-label="the news"><img class="logo-claro" src="/_blob/1fa143a58eb242285f9e7b522673ceb9" alt="the news"><img class="logo-escuro" src="/_blob/cb0cf8af1319aa80cbc08d3d6a3c826a" alt="the news"></a>
+    <a class="btn main" href="#inscricao">quero participar</a>
+  </div>
+</header>
+
+<div class="hero" id="inicio">
+  <div class="wrap">
+    <div>
+      <h1>super team creator challenge.</h1>
+      <p>se os seus anúncios da newsletter do the news trouxerem 1.000 leitores, você ganha 3 latas de Super Coffee de graça. oportunidade imperdível.</p>
+      <p class="mini">e dizem que não existe almoço grátis, né? pois é, dependendo do quão rápido você enviar o anúncio, ainda dá para ganhar um também.</p>
+    </div>
+    <div class="colagem" aria-hidden="true">
+      <img class="meg" src="/_blob/d903a8efe7f71cfb0005a3ccebba7579" alt="">
+      <img class="cam" src="/_blob/cd04815705bc218d06bee472408f9574" alt="">
+      <svg class="estrela" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 6 L70 44 L108 30 L80 58 L114 78 L74 76 L82 114 L60 84 L36 112 L42 74 L6 80 L38 56 L12 26 L50 42 Z" fill="none" stroke="#FFCD00" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/></svg>
+    </div>
+  </div>
+</div>
+
+<nav class="abas" aria-label="seções"><div class="wrap">
+  <a href="#premio">o prêmio</a>
+  <a href="#funciona">como funciona</a>
+  <a href="#briefing">briefing</a>
+  <a href="#participar">como participar</a>
+  <a href="#time">o time</a>
+</div></nav>
+
+<section class="premio" id="premio" data-aba="premio">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="tit"><h2>o prêmio.</h2><p>aqui não tem sorteio. todo mundo que juntar 1.000 leitores novos com os seus anúncios da newsletter do the news garante o prêmio.</p></div>
+        <div class="conta"><span class="a" id="meta-a">1.000 leitores</span><span class="ig">=</span><span class="b">3 latas</span></div>
+        <p class="texto">são três latas de Super Coffee. e o prêmio vale para todo mundo que bater a meta, não só para quem chegar primeiro.</p>
+        <p class="mini">passou de 1.000? continuam sendo 3 latas, o prêmio não aumenta com o número de leitores.</p>
+        <div class="plus"><b>e tem um plus.</b><span>mande o vídeo até as 11h do dia 24 e ganhe o seu almoço todo pago, bancado pelo time de marketing (até R$ 60).</span></div>
+      </div>
+      <div class="lata" id="lata">
+        <div class="fundo"></div>
+        <div class="vaga">[foto da lata de Super Coffee]</div>
+        <svg class="estrela" viewBox="0 0 120 120" aria-hidden="true"><path d="M60 6 L70 44 L108 30 L80 58 L114 78 L74 76 L82 114 L60 84 L36 112 L42 74 L6 80 L38 56 L12 26 L50 42 Z" fill="none" stroke="#FFCD00" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="funciona" data-aba="funciona">
+  <div class="wrap">
+    <div class="tit"><h2>como funciona.</h2><p>você não precisa entender de tráfego pago. é só gravar, que a gente cuida do resto.</p></div>
+    <div class="funciona">
+      <div class="cols">
+        <div><b>você grava, a gente anuncia</b><p>o seu vídeo vira um anúncio pago no Instagram e no Facebook. a gente paga a plataforma para mostrar ele para gente que ainda não conhece o the news, e quem clica e se inscreve por ele vira um leitor seu. você não precisa mexer em nada de anúncio, só gravar.</p></div>
+        <div><b>todo mundo larga junto</b><p>todos os anúncios entram no ar no mesmo dia, na mesma campanha e com a mesma verba para começar, uma quantia pequena só para testar. nos primeiros dias a gente só observa o que acontece com cada um.</p></div>
+        <div><b>quem convence, recebe mais</b><p>se o seu anúncio está trazendo leitores gastando pouco por inscrição, é sinal de que ele está convencendo as pessoas. aí a gente coloca mais dinheiro nele, ele aparece para mais gente e traz ainda mais leitores. se ele não está convencendo, a verba não cresce.</p></div>
+        <div><b>você acompanha tudo</b><p>os leitores de todos os seus anúncios somam na mesma conta. quando a apuração começar, uma aba nova aparece aqui na página para você ver quantos leitores cada pessoa já trouxe e quanto falta para chegar nos 1.000.</p></div>
+      </div>
+      <p class="fecho"><strong>quanto mais anúncios, melhor.</strong> você pode mandar quantos quiser, e cada um deles te aproxima dos 1.000.</p>
+    </div>
+  </div>
+</section>
+
+<section id="briefing" data-aba="briefing">
+  <div class="wrap">
+    <div class="tit"><h2>briefing.</h2><p>antes de gravar, dá uma olhada no que um anúncio precisa ter.</p></div>
+    <ul class="regras">
+      <li>o vídeo precisa ser vertical e ter cerca de 30 segundos.</li>
+      <li>você não precisa editar nada, porque a legenda, os cortes e o acabamento ficam com a gente. se você gosta de editar ou tem uma visão específica de como o seu anúncio deve ficar na edição, fique à vontade para editar, mas não é obrigatório!</li>
+      <li>você pode pedir ajuda para quem quiser! cameraman, roteirista, o que for. o que importa é que o anúncio fique bom, risos.</li>
+      <li>capriche nos primeiros segundos, que é quando a pessoa decide se continua assistindo.</li>
+      <li>fale do jeito que a gente fala no the news, de um jeito direto e leve.</li>
+      <li>nada de política. não mencione eleições, partidos ou qualquer político, como Lula ou Trump, nem falando e nem aparecendo em imagem.</li>
+      <li>não prometa nada que a newsletter não entrega e não use música ou imagem sem direito de uso.</li>
+    </ul>
+    <h3 class="refs-tit">o roteiro</h3>
+    <p class="refs-sub">os anúncios que mais funcionam com a gente seguem sempre a mesma estrutura, em três partes. o do João Vitor é um bom exemplo de cada uma delas. você não precisa seguir esse roteiro à risca, ele está aqui só para dar contexto e inspirar. fique à vontade para deixar a criatividade fluir.</p>
+    <ol class="roteiro">
+      <li><b>o gancho</b><p>a primeira frase precisa prender a pessoa com uma promessa, que quase sempre gira em torno de ficar mais inteligente ou mais bem informado.</p><blockquote>“esse é o melhor hábito se tu quer se tornar uma pessoa mais inteligente.”</blockquote></li>
+      <li><b>o que é o the news</b><p>depois, você conecta essa promessa com o the news e conta o que ele é: um jornal diário e gratuito, que chega às 6:06 e se lê em poucos minutos.</p><blockquote>“o the news é um jornal diário e 100% gratuito. chega todo dia na tua caixa de e-mail às 6:06 da manhã, contando as principais notícias do Brasil e do mundo. ele é super divertido de ler e leva menos de 10 minutos para te tornar uma pessoa mais informada e inteligente.”</blockquote></li>
+      <li><b>a chamada para ação</b><p>no fim, peça para a pessoa se inscrever pelo link, de um jeito direto.</p><blockquote>“clica no link aqui, coloca o teu e-mail, que amanhã às 6:06 da manhã o the news vai estar te esperando na tua caixa de entrada. bora!”</blockquote></li>
+    </ol>
+    <h3 class="refs-tit">referências</h3>
+    <p class="refs-sub">se bater a dúvida, assiste a esses anúncios. todos seguem essa estrutura e funcionaram muito bem com a gente.</p>
+    <div class="refs">
+      <a href="https://drive.google.com/file/d/17o65Mxz_GPPZoU-xo5OJmA_R-oSAxZ0c/view?usp=drive_link" target="_blank" rel="noopener"><span class="tela foto"><img src="/_blob/495cbdb9128997a3f604412e5e44e53a" alt="" loading="lazy"><span class="play" aria-hidden="true"></span></span><q>esse é o melhor hábito se tu quer se tornar uma pessoa mais inteligente.</q><b>João Vitor, melhor hábito</b><span>AD 860 · assistir no Drive ↗</span></a>
+      <a href="https://drive.google.com/file/d/1G3_4ps2Th5oYSF2gHgmKJ7csLKariq-r/view?usp=drivesdk" target="_blank" rel="noopener"><span class="tela foto"><img src="/_blob/301973d32a466606c76482fb1747a682" alt="" loading="lazy"><span class="play" aria-hidden="true"></span></span><q>você sabe três coisas que aconteceram no Brasil ontem?</q><b>Manu, 3 coisas</b><span>AD 1112 · assistir no Drive ↗</span></a>
+      <a href="https://drive.google.com/file/d/1oW3ethEwekPHQFT0mQ8TwNd1hIONCkvs/view?usp=drive_link" target="_blank" rel="noopener"><span class="tela foto"><img src="/_blob/b0b9332b3db82425b2ed6db3dcc638e8" alt="" loading="lazy"><span class="play" aria-hidden="true"></span></span><q>aqui vai uma dica de como você pode parecer mais inteligente que 90% das pessoas ao seu redor.</q><b>Manu, fundo vermelho</b><span>AD 469 · assistir no Drive ↗</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="participar" data-aba="participar">
+  <div class="wrap">
+    <div class="tit"><h2>como participar.</h2><p>você só precisa do celular e de alguns minutos.</p></div>
+    <ol class="passos">
+      <li><b>leia o briefing</b><span>na aba de <a href="#briefing">briefing</a> estão as regras do vídeo e alguns anúncios para servir de referência.</span></li>
+      <li><b>grave o seu vídeo</b><span>pode gravar no celular mesmo, na vertical e com cerca de 30 segundos. e pode gravar quantos quiser.</span></li>
+      <li><b>mande para a gente</b><span>suba cada vídeo no Google Drive e cole os links no formulário aqui embaixo. o time de marketing vai conferir o seu anúncio e pode te chamar se precisar de alguma alteração.</span></li>
+    </ol>
+    <div class="datas" id="datas"></div>
+    <div class="form" id="inscricao">
+      <h3 id="form-titulo">mande os seus anúncios.</h3>
+      <p class="sub" id="form-sub">é só abrir o formulário e preencher.</p>
+      <div id="form-corpo"><p class="aviso">carregando o formulário…</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="time" data-aba="time">
+  <div class="wrap">
+    <div class="tit"><h2>o time.</h2><p id="qtd">aqui fica todo mundo do the news, e dá para ver quem já mandou anúncio.</p></div>
+    <div class="contador" id="contador"></div>
+    <div class="grade" id="grade"></div>
+  </div>
+</section>
+
+<section class="corrida" id="corrida" data-aba="corrida">
+  <div class="wrap">
+    <div class="tit"><h2>a apuração.</h2><p>aqui você acompanha a corrida: quantos leitores cada pessoa já trouxe com os seus anúncios, dia após dia. quem cruzar a linha de chegada garante as latas.</p></div>
+    <div class="placar" id="placar"></div>
+    <div class="pista-wrap"><div class="pista-topo"><span id="pista-dia"></span></div><div class="pista" id="pista" role="img" aria-label="corrida de cavalinhos com os leitores trazidos por cada pessoa"><span class="chegada-rot" id="chegada-rot"></span><div class="chegada" aria-hidden="true"></div><div class="faixas" id="faixas"></div></div></div>
+    <div class="resumo" id="resumo"></div>
+    <p class="nota">os números são atualizados ao longo da apuração e podem mudar um pouco, porque o Meta leva algumas horas para atribuir cada inscrição ao anúncio certo.</p>
+  </div>
+</section>
+
+
+
+<footer><div class="wrap"><span>dúvidas? se for sobre como gravar o anúncio, fala com a Manu ou com a Gabi. se for sobre a mecânica, fala com a Lu.</span><img src="/_blob/b2c573c77ba6cd3c1cf9c0671a4c14af" alt="tns"></div></footer>
+
+<script>
+/* ===== datas, meta e prêmio: edite aqui (datas em AAAA-MM-DD; null = “a definir”) ===== */
+var CONFIG = {
+  prazo: "2026-11-25",     // último dia para mandar o anúncio
+  largada: "2026-11-26",   // dia em que os anúncios vão ao ar
+  fim: "2026-12-11",       // último dia da corrida
+  resultado: null,         // entrega das latas: null = “no kickoff”
+  meta: 1000,        // leitores que garantem as 3 latas
+  lata: "/_blob/a38309889af856362463e261bfae443b",
+  rotulo: "/_blob/30cbbf4b5d200ba2216a550cd68f8e96"
+};
+/* ======================================================================================= */
+
+var db=null,user=null,assets=null,me=null,souEditor=false;
+var parts=[],estado=null,perfis={},vistos={},meuVideo=null,previa=false,fotoNova=null,links={};
+var CORES=["#000000","#FF8E42","#374B84","#00BF63","#F742A1","#2AA0A7","#C49A00","#6A98FF"];
+
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function dia(iso){if(!iso)return null;var d=new Date(iso+"T12:00:00");return isNaN(d)?null:d}
+function fmt(iso){var d=dia(iso);return d?d.toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"}):"a definir"}
+function hoje(){var d=new Date();d.setHours(12,0,0,0);return d}
+function ini(n){var p=String(n||"?").trim().split(/\s+/);return (p[0][0]+(p.length>1?p[p.length-1][0]:"")).toUpperCase()}
+var time=[],nomeTime={},resolvendo=false;
+function nomeDe(id){return nomeTime[id]||(perfis[id]&&perfis[id].name)||"participante"}
+function norm(s){return String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim()}
+function primeiro(n){return String(n||"").trim().split(/\s+/)[0]}
+function mil(v){return Math.round(v).toLocaleString("pt-BR")}
+function prazoPassou(){var d=dia(CONFIG.prazo);if(!d)return false;d.setHours(23,59,59,0);return new Date()>d}
+
+/* ---------- rosto: recorte colorido (sem retícula) ---------- */
+function fonteFoto(p){
+  if(p.recorteId)return{src:"/_blob/"+p.recorteId,rec:true};
+  if(p.fotoId)return{src:"/_blob/"+p.fotoId,rec:false};
+  if(!p.demo&&perfis[p.id]&&perfis[p.id].avatarUrl&&perfis[p.id].avatarUrl.indexOf("data:")!==0)return{src:perfis[p.id].avatarUrl,rec:false};
+  return null;
+}
+function rostoHtml(p){
+  var f=fonteFoto(p);
+  if(!f)return '<span class="adesivo"><span class="ini">'+esc(ini(p.nome||nomeDe(p.id)))+'</span></span>';
+  return '<span class="adesivo"><img class="'+(f.rec?'recorte':'')+'" src="'+esc(f.src)+'" alt="" loading="lazy"></span>';
+}
+var tic=null;function agendar(){clearTimeout(tic);tic=setTimeout(function(){renderGrade(true);renderCorrida()},60)}
+
+/* ---------- a lata girando: o rótulo desenrolado é redesenhado em volta de um cilindro ---------- */
+function lataGiro(el,lataSrc,rotuloSrc,fase){
+  var W=242,Hc=440,cx=126,R=110,y0=36,H=398,spd=110;
+  var c=document.createElement("canvas");c.width=W*2;c.height=Hc*2;c.setAttribute("role","img");c.setAttribute("aria-label","lata de Super Coffee girando");
+  el.appendChild(c);var x=c.getContext("2d");x.scale(2,2);x.imageSmoothingQuality="high";
+  var lata=new Image(),rot=new Image(),n=0;
+  lata.onload=rot.onload=function(){if(++n===2)comecar()};lata.src=lataSrc;rot.src=rotuloSrc;
+  function comecar(){
+    var P=rot.width,tex=document.createElement("canvas");tex.width=P*2;tex.height=H;
+    var tx=tex.getContext("2d");tx.drawImage(rot,0,0);tx.drawImage(rot,P,0);
+    var parado=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches,t0=performance.now();
+    function quadro(agora){
+      var off=((parado?0:(agora-t0)/1000*spd)+(fase||0)*P)%P;
+      x.clearRect(0,0,W,Hc);x.globalCompositeOperation="source-over";
+      for(var px=Math.floor(cx-R);px<cx+R;px+=0.5){
+        var s=Math.max(-1,Math.min(1,(px+.25-cx)/R)),u=((R*Math.asin(s)+off)%P+P)%P;
+        x.drawImage(tex,u,0,.5,H,px,y0,.5,H);
+      }
+      var g=x.createLinearGradient(cx-R,0,cx+R,0);
+      g.addColorStop(0,"rgba(0,0,0,.6)");g.addColorStop(.14,"rgba(0,0,0,.18)");g.addColorStop(.32,"rgba(255,255,255,.16)");g.addColorStop(.42,"rgba(255,255,255,.05)");g.addColorStop(.62,"rgba(0,0,0,0)");g.addColorStop(.86,"rgba(0,0,0,.25)");g.addColorStop(1,"rgba(0,0,0,.65)");
+      x.fillStyle=g;x.fillRect(cx-R,y0,2*R,H);
+      x.globalCompositeOperation="destination-in";x.drawImage(lata,0,0);
+      x.globalCompositeOperation="source-over";x.drawImage(lata,0,0,W,42,0,0,W,42);
+      if(!parado&&document.visibilityState!=="hidden")requestAnimationFrame(quadro);else if(!parado)document.addEventListener("visibilitychange",function v(){if(document.visibilityState==="visible"){document.removeEventListener("visibilitychange",v);requestAnimationFrame(quadro)}});
+    }
+    requestAnimationFrame(quadro);
+  }
+}
+
+/* ---------- datas ---------- */
+function renderDatas(){
+  $("datas").innerHTML=[["prazo","prazo para mandar os vídeos"],["largada","os anúncios entram no ar"],["resultado","entrega das latas"]]
+    .map(function(x){return '<div><b>'+(x[0]==='resultado'&&!CONFIG.resultado?'kickoff':fmt(CONFIG[x[0]]))+'</b><span>'+x[1]+'</span></div>'}).join("");
+  var l=dia(CONFIG.largada),f=dia(CONFIG.fim),t={};
+  if(prazoPassou()&&!(l&&hoje()>=l))t.textContent="as inscrições fecharam e a apuração começa em "+fmt(CONFIG.largada)+".";
+  else if(l&&hoje()>=l&&!(f&&hoje()>f))t.textContent="a apuração está rolando agora.";
+  else if(f&&hoje()>f)t.textContent="a apuração já terminou.";
+  else t.textContent=CONFIG.prazo?"as inscrições estão abertas até "+fmt(CONFIG.prazo)+".":"as inscrições estão abertas.";
+  $("meta-a").textContent=mil(CONFIG.meta)+" leitores";
+  if(CONFIG.lata&&CONFIG.rotulo){$("lata").innerHTML='<div class="fundo"></div><div class="trio"><div class="lata3d l1"></div><div class="lata3d l2"></div><div class="lata3d l3"></div></div>';[".l1",".l2",".l3"].forEach(function(s,i){lataGiro($("lata").querySelector(s),CONFIG.lata,CONFIG.rotulo,[.33,0,.66][i])})}
+}
+
+/* ---------- o time ---------- */
+function montarTime(){
+  var usados={},rows=[];
+  nomeTime={};
+  time.forEach(function(t,i){
+    var part=null;
+    part=parts.filter(function(p){return p.pessoa===t.id})[0]||null;
+    if(!part&&t.uid)part=parts.filter(function(p){return p.id===t.uid&&!p.pessoa})[0]||null;
+    if(!part)part=parts.filter(function(p){return !usados[p.id]&&perfis[p.id]&&norm(perfis[p.id].name)===norm(t.nome)})[0]||null;
+    if(part){usados[part.id]=1;nomeTime[part.id]=t.nome}
+    rows.push({id:part?part.id:(t.uid||("t-"+t.id)),demo:!(part||t.uid),nome:t.nome,mandou:!!part,msg:part&&part.msg,area:part&&part.area,anuncio:part&&part.anuncio,anuncios:part&&part.anuncios,fotoId:part&&part.fotoId,recorteId:t.recorteId||(part&&part.recorteId),criadoEm:part&&part.criadoEm});
+  });
+  parts.forEach(function(p){if(!usados[p.id])rows.push({id:p.id,nome:nomeDe(p.id),mandou:true,msg:p.msg,area:p.area,anuncio:p.anuncio,anuncios:p.anuncios,fotoId:p.fotoId,recorteId:p.recorteId,criadoEm:p.criadoEm})});
+  rows.sort(function(a,b){if(a.mandou!==b.mandou)return a.mandou?-1:1;return a.nome.localeCompare(b.nome,"pt-BR")});
+  return rows;
+}
+function renderGrade(soFotos){
+  var rows=montarTime(),ok=rows.filter(function(r){return r.mandou}).length,falta=rows.length-ok;
+  $("qtd").textContent=ok?(ok===1?"uma pessoa já vestiu a camisa e mandou anúncio. e você?":ok+" pessoas já vestiram a camisa e mandaram anúncio. e você?"):"ninguém mandou anúncio ainda. que tal ser a primeira pessoa?";
+  var c=$("contador");if(c)c.innerHTML=rows.length?'<span class="c-ok">'+ok+' já '+(ok===1?'mandou':'mandaram')+'</span><span class="c-buu">'+falta+' ainda não '+(falta===1?'mandou':'mandaram')+'</span>':'';
+  if(!rows.length){$("grade").innerHTML='<div class="vazio">ninguém mandou anúncio ainda. <a href="#inscricao">que tal ser a primeira pessoa?</a></div>';return}
+  $("grade").innerHTML=rows.map(function(p){
+    var novo=!soFotos&&p.mandou&&!vistos[p.id];if(p.mandou)vistos[p.id]=1;
+    return '<div class="pessoa'+(novo?' novo':'')+(p.mandou?'':' falta')+'"><div class="rosto">'+rostoHtml(p)+'</div><b>'+esc(p.nome)+'</b>'+
+      (p.mandou?'<span class="st ok">já mandou, vestiu a camisa 😄</span>':'<span class="st buu">ainda não mandou. buuuuu 👎</span>')+'</div>';
+  }).join("");
+}
+async function vincularTime(){
+  if(resolvendo||!user||!souEditor||!db)return;
+  var faltam=time.filter(function(t){return !t.uid&&t.busca});if(!faltam.length)return;
+  resolvendo=true;var mudou=false,nova=time.map(function(t){return Object.assign({},t)});
+  for(var i=0;i<nova.length;i++){var t=nova[i];if(t.uid||!t.busca)continue;
+    try{var hits=await user.search(t.busca);var h=hits.length===1?hits[0]:hits.filter(function(x){return norm(x.name)===norm(t.nome)})[0];if(h&&h.id){t.uid=h.id;mudou=true}}catch(e){}}
+  if(mudou){try{await db.doc("time/lista").update({pessoas:nova})}catch(e){}}
+  resolvendo=false;
+}
+
+/* ---------- a apuração (estilo pesquisa de intenção de voto) ---------- */
+var DEMO={dias:["01/12","02/12","03/12","04/12","05/12","06/12","07/12","08/12"],gente:[
+  ["Ana Souza","o café que te informa",[0,180,420,700,1050,1420,1800,2150]],
+  ["Bruno Lima","5 minutos e pronto",[0,260,520,760,980,1260,1640,1980]],
+  ["Carla Mendes","chega de doomscroll",[0,120,300,560,820,1020,1260,1480]],
+  ["Diego Rocha","o jornal que eu leio",[0,220,380,520,700,860,980,1120]],
+  ["Elisa Prado","bom dia, informado",[0,90,200,330,450,620,760,890]],
+  ["Felipe Tavares","notícia sem enrolação",[0,60,150,240,330,410,520,610]]]};
+function dadosCorrida(){
+  var usarDemo=previa||!parts.length||!(estado&&estado.serie&&Object.keys(estado.serie).length);
+  if(usarDemo)return{demo:true,dias:DEMO.dias,rows:DEMO.gente.map(function(g,i){return{id:"d"+i,demo:true,nome:g[0],anuncio:g[1],serie:g[2].map(function(v){return Math.round(v/2)})}})};
+  return{demo:false,dias:estado.dias||[],rows:parts.map(function(p){var t=time.filter(function(x){return x.id===p.pessoa})[0]||{};return{id:p.id,nome:t.nome||nomeDe(p.id),anuncio:p.anuncio,anuncios:p.anuncios,recorteId:t.recorteId||p.recorteId,fotoId:p.fotoId,serie:(estado.serie[p.id]||[]).map(Number)}})};
+}
+/* ---------- a corrida de cavalinhos ---------- */
+var pista={lanes:{},rodando:false,timer:null},LH=76;
+function hashId(id){var h=0;String(id).split("").forEach(function(c){h=(h*31+c.charCodeAt(0))>>>0});return h}
+function corCavalo(id){var c=CORES[hashId(id)%CORES.length];return c==="#000000"?"#1a1a1a":c}
+function cavaloSvg(cor){
+  return '<svg class="eq" viewBox="0 0 90 60" aria-hidden="true"><g stroke="'+cor+'" stroke-width="4.5" stroke-linecap="round" fill="none"><path class="p1" d="M57 32 L59 56"/><path class="p2" d="M51 32 L49 56"/><path class="p3" d="M28 32 L24 56"/><path class="p4" d="M22 32 L15 54"/></g>'+
+    '<path d="M17 22 C6 19 1 30 6 44" stroke="'+cor+'" stroke-width="4" fill="none" stroke-linecap="round"/>'+
+    '<ellipse cx="39" cy="26" rx="25" ry="9.5" fill="'+cor+'"/>'+
+    '<path d="M54 22 L64 5 L72 8 L66 30 Z" fill="'+cor+'"/>'+
+    '<path d="M65 5 L81 9 L85 18 L80 20 L71 14 Z" fill="'+cor+'"/>'+
+    '<path d="M65 5 L67 -1 L70 6 Z" fill="'+cor+'"/>'+
+    '<path d="M62 7 C58 14 55 18 52 22" stroke="#fff" stroke-opacity=".55" stroke-width="2" fill="none" stroke-linecap="round"/>'+
+    '<circle cx="73" cy="9.5" r="1.6" fill="#fff"/></svg>';
+}
+function valorEm(r,k){if(k==null)return r.ult;if(!r.serie.length)return 0;return Number(r.serie[Math.min(k,r.serie.length-1)])||0}
+function desenharPista(rows,meta,k,dias){
+  var box=$("faixas");if(!box)return;
+  var vs=rows.map(function(r){return{r:r,v:valorEm(r,k)}}).sort(function(a,b){return b.v-a.v||String(a.r.nome).localeCompare(String(b.r.nome),"pt-BR")});
+  var vis=vs.slice(0,12),ids={};
+  $("pista").style.height=(vis.length*LH+56)+"px";
+  $("chegada-rot").textContent=mil(meta)+" leitores = 3 latas";
+  $("pista-dia").textContent=k==null?(vs.length>12?"+ "+(vs.length-12)+" pessoas na pista":""):"dia "+(dias[k]||(k+1));
+  vis.forEach(function(x,i){
+    var r=x.r,id=String(r.id);ids[id]=1;
+    var L=pista.lanes[id];
+    if(!L){
+      var el=document.createElement("div");el.className="pf";
+      el.innerHTML='<div class="nome"><b></b><i></i></div><div class="trilho"><div class="cav" style="--p:0"><span class="piloto"></span>'+cavaloSvg(corCavalo(id))+'</div></div>';
+      el.style.transform="translateY("+(i*LH)+"px)";
+      box.appendChild(el);
+      L={el:el,nome:el.querySelector(".nome b"),pts:el.querySelector(".nome i"),cav:el.querySelector(".cav"),piloto:el.querySelector(".piloto"),foto:"",p:0,t:null};
+      pista.lanes[id]=L;
+    }
+    L.el.style.transform="translateY("+(i*LH)+"px)";
+    L.el.classList.toggle("lider",i===0&&x.v>0);
+    L.el.classList.toggle("ganhou",x.v>=meta);
+    L.nome.textContent=primeiro(r.nome);
+    L.pts.textContent=mil(x.v)+(x.v>=meta?" ✓":"");
+    var h=rostoHtml(r);if(h!==L.foto){L.piloto.innerHTML=h;L.foto=h}
+    var p=Math.min(1,x.v/meta);
+    if(Math.abs(p-L.p)>0.001){
+      L.p=p;L.cav.classList.add("correndo");clearTimeout(L.t);L.t=setTimeout(function(){L.cav.classList.remove("correndo")},1100);
+      (function(L,p){requestAnimationFrame(function(){requestAnimationFrame(function(){L.cav.style.setProperty("--p",p)})})})(L,p);
+    }
+  });
+  Object.keys(pista.lanes).forEach(function(id){if(!ids[id]){pista.lanes[id].el.remove();delete pista.lanes[id]}});
+}
+function reverCorrida(){
+  var D=dadosCorrida(),meta=CONFIG.meta||1000,dias=D.dias;
+  var rows=D.rows.map(function(r){r.ult=r.serie.length?r.serie[r.serie.length-1]:0;return r});
+  var n=rows.reduce(function(m,r){return Math.max(m,r.serie.length)},0);
+  if(pista.rodando){pararReplay();return}
+  if(n<2)return;
+  pista.rodando=true;var k=0;
+  renderCorrida();
+  desenharPista(rows,meta,0,dias);
+  pista.timer=setInterval(function(){
+    k++;
+    if(k>=n){pararReplay();return}
+    desenharPista(rows,meta,k,dias);
+  },1100);
+}
+function pararReplay(){clearInterval(pista.timer);pista.rodando=false;renderCorrida()}
+function renderCorrida(){
+  var D=dadosCorrida(),meta=CONFIG.meta||1000,dias=D.dias;
+  var rows=D.rows.map(function(r){r.ult=r.serie.length?r.serie[r.serie.length-1]:0;return r}).sort(function(a,b){return b.ult-a.ult});
+  var semDados=!D.demo&&!rows.some(function(r){return r.ult>0});
+  var ph=[];
+  if(D.demo)ph.push('<span class="selo">prévia com dados de exemplo</span>');
+  else if(semDados)ph.push('<span class="selo">aguardando a largada</span>');
+  else ph.push('<span class="vivo">ao vivo</span>');
+  if(!D.demo&&estado&&estado.atualizadoEm)ph.push('<span>atualizado '+esc(new Date(estado.atualizadoEm).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}))+'</span>');
+  var temReal=parts.length&&estado&&estado.serie&&Object.keys(estado.serie).length;
+  if(temReal)ph.push('<button id="bt-previa">'+(previa?"voltar para a apuração real":"ver prévia")+'</button>');
+  var nDias=rows.reduce(function(m,r){return Math.max(m,r.serie.length)},0);
+  if(nDias>1)ph.push('<button id="bt-replay">'+(pista.rodando?"■ parar":"▶ rever a corrida")+'</button>');
+  $("placar").innerHTML=ph.join("");
+  var b=$("bt-previa");if(b)b.onclick=function(){previa=!previa;renderCorrida()};
+  var rp=$("bt-replay");if(rp)rp.onclick=reverCorrida;
+  if(!pista.rodando)desenharPista(rows,meta,null,dias);
+  var bateram=rows.filter(function(r){return r.ult>=meta}).length,total=rows.reduce(function(a,r){return a+r.ult},0);
+  $("resumo").innerHTML='<span><b>'+bateram+'</b> '+(bateram===1?"pessoa já bateu":"pessoas já bateram")+' a meta</span><span><b>'+mil(total)+'</b> leitores trazidos no total</span><span><b>'+rows.length+'</b> '+(rows.length===1?"pessoa":"pessoas")+' na disputa</span>';
+}
+
+/* ---------- formulário ---------- */
+var AREAS=["conteúdo","distribuição & social media","marketing","produto","tech","branded content","receita","finance & corporate","pessoas"];
+var itens=[],meusItens=[],formEditado=false,modoMsg=false,semAcesso=false;
+function lerItens(){
+  var ds=document.querySelectorAll("#f-lista .item-ad");if(!ds.length)return;
+  itens=Array.prototype.map.call(ds,function(d){return{nome:d.querySelector(".f-nome").value,drive:d.querySelector(".f-link").value}});
+}
+function desenharItens(){
+  var el=$("f-lista");if(!el)return;
+  el.innerHTML=itens.map(function(it,i){
+    return '<div class="item-ad"><div class="item-tit"><b>anúncio '+(i+1)+'</b>'+(itens.length>1?'<button type="button" class="tira" data-i="'+i+'">remover</button>':'')+'</div>'+
+      '<div class="campo"><label for="f-nome-'+i+'">nome do anúncio</label><input type="text" class="f-nome" id="f-nome-'+i+'" maxlength="60" placeholder="uma frase curta que resume a ideia" value="'+esc(it.nome)+'"></div>'+
+      '<div class="campo"><label for="f-link-'+i+'">link do vídeo no Drive</label><input type="url" class="f-link" id="f-link-'+i+'" placeholder="https://drive.google.com/…" value="'+esc(it.drive)+'">'+(i===0?'<small>no Drive, clique em compartilhar e deixe como “qualquer pessoa com o link” (visualizador). confira abrindo o link numa janela anônima, porque se o acesso estiver restrito o time não consegue ver o seu vídeo. só a organização vai ver o link.</small>':'')+'</div></div>';
+  }).join("");
+  Array.prototype.forEach.call(el.querySelectorAll("input"),function(inp){inp.oninput=function(){lerItens();formEditado=true}});
+  Array.prototype.forEach.call(el.querySelectorAll(".tira"),function(b){b.onclick=function(){lerItens();itens.splice(+b.getAttribute("data-i"),1);formEditado=true;desenharItens()}});
+}
+function achaPessoa(v){
+  var q=norm(v);if(!q)return "";
+  var ex=time.filter(function(t){return norm(t.nome)===q})[0];if(ex)return ex.id;
+  var ps=time.filter(function(t){return norm(t.nome).indexOf(q)>-1});
+  return ps.length===1?ps[0].id:"";
+}
+var FORM_URL="https://thenews.com.br/form/pmMCym113S9DzzdHshA2a";
+function renderForm(){
+  var c=$("form-corpo");
+  if(prazoPassou()){$("form-titulo").textContent="as inscrições já fecharam.";$("form-sub").textContent="";c.innerHTML='<p class="aviso">o prazo para mandar anúncios terminou.</p>';return}
+  $("form-titulo").textContent="mande os seus anúncios.";
+  $("form-sub").textContent="é só abrir o formulário, preencher e colar o link do vídeo no Drive. pode mandar quantos anúncios quiser.";
+  c.innerHTML='<p style="margin-bottom:20px"><a class="btn main" href="'+FORM_URL+'" target="_blank" rel="noopener">abrir o formulário</a></p>'+
+    '<p class="aviso" style="margin-top:0">ao enviar, você entende que o seu anúncio vai passar pela análise do time de marketing, que confere se ele segue todos os pontos do briefing e pode entrar em contato com você para pedir alterações. e que receber o prêmio depende dessa aprovação.</p>';
+}
+function reduzir(file){return new Promise(function(ok){var img=new Image();img.onload=function(){var s=Math.min(1,700/Math.max(img.width,img.height)),cv=document.createElement("canvas");cv.width=Math.round(img.width*s);cv.height=Math.round(img.height*s);cv.getContext("2d").drawImage(img,0,0,cv.width,cv.height);cv.toBlob(function(b){ok(b||file)},"image/jpeg",.86)};img.onerror=function(){ok(file)};img.src=URL.createObjectURL(file)})}
+async function enviar(){
+  var msg=$("f-msg"),bt=$("f-enviar");msg.className="msg";msg.textContent="";
+  lerItens();
+  var nomeDig=$("f-pessoa").value.trim(),pessoa=achaPessoa(nomeDig),area=$("f-area").value.trim();
+  var lista=itens.map(function(x){return{nome:x.nome.trim(),drive:x.drive.trim()}});
+  function erro(t){msg.className="msg erro";msg.textContent=t}
+  if(!pessoa&&!(modoMsg&&nomeDig)){erro(modoMsg?"escreva o seu nome.":"não achamos esse nome no time. escreva o seu nome como aparece na lista de sugestões.");return}
+  if(!area){erro("escolha a sua área na lista.");return}
+  for(var i=0;i<lista.length;i++){
+    var qual=lista.length>1?" "+(i+1):"";
+    if(!lista[i].nome){erro("preencha o nome do anúncio"+qual+".");return}
+    if(!/^https:\/\/(drive|docs)\.google\.com\//.test(lista[i].drive)){erro("cole um link do Google Drive no anúncio"+qual+", que começa com https://drive.google.com.");return}
+  }
+  if(!$("f-ok").checked){erro("confirme que você leu o briefing.");return}
+  if(modoMsg){mostrarMensagem(nomeDig,area,lista);return}
+  bt.disabled=true;bt.textContent="enviando…";
+  try{
+    var meu=parts.filter(function(p){return p.id===me.id})[0]||{};
+    var dados={pessoa:pessoa,area:area,anuncio:lista[0].nome,anuncios:lista.map(function(x){return x.nome}),criadoEm:meu.criadoEm||Date.now(),atualizadoEm:Date.now()};
+    if(meu.fotoId)dados.fotoId=meu.fotoId;if(meu.recorteId)dados.recorteId=meu.recorteId;
+    await db.doc("videos/"+me.id).set({drive:lista[0].drive,itens:lista,atualizadoEm:Date.now()});
+    await db.doc("participantes/"+me.id).set(dados);
+    meuVideo=lista[0].drive;meusItens=lista;itens=lista.map(function(x){return{nome:x.nome,drive:x.drive}});formEditado=false;fotoNova=null;msg.className="msg ok";msg.textContent=lista.length>1?"pronto, os seus "+lista.length+" anúncios já estão no time!":"pronto, você já está no time!";
+  }catch(e){
+    if(e&&(e.code==="permission_denied"||e.code==="not_granted"||e.code==="invalid_argument")){semAcesso=true;formEditado=true;renderForm();mostrarMensagem(nomeDig,area,lista);return}
+    msg.className="msg erro";msg.textContent="não conseguimos enviar agora. tente de novo daqui a alguns segundos."}
+  bt.disabled=false;bt.textContent="salvar alterações";
+}
+function mostrarMensagem(nome,area,lista){
+  var txt="oi! quero participar do Super Team Creator Challenge.\n\nnome: "+nome+"\nárea: "+area+"\n"+lista.map(function(x,i){return "\nanúncio "+(lista.length>1?(i+1)+" ":"")+"("+x.nome+")\nvídeo: "+x.drive}).join("\n")+"\n\nli o briefing e os meus anúncios seguem as regras.";
+  var out=$("f-saida");if(!out)return;
+  var m=$("f-msg");if(m){m.className="msg ok";m.textContent="mensagem pronta! copie e mande para o time de marketing."}
+  out.innerHTML='<textarea id="f-txt" readonly rows="10" style="width:100%;margin-top:14px;padding:14px;border:2px solid var(--fg);background:transparent;color:inherit;border-radius:14px;font:inherit;font-size:15px;line-height:1.4"></textarea>'+
+    '<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px"><button type="button" class="btn main" id="f-copiar">copiar a mensagem</button>'+
+    '<a class="btn line" id="f-mail" href="mailto:?subject='+encodeURIComponent("Super Team Creator Challenge")+'&body='+encodeURIComponent(txt)+'">abrir no e-mail</a>'+
+    '<a class="btn line" id="f-zap" target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent(txt)+'">mandar no WhatsApp</a></div>';
+  var ta=$("f-txt");ta.value=txt;
+  $("f-copiar").onclick=function(){
+    function ok(){$("f-copiar").textContent="copiado!";setTimeout(function(){var b=$("f-copiar");if(b)b.textContent="copiar a mensagem"},1800)}
+    try{navigator.clipboard.writeText(txt).then(ok,function(){ta.select();document.execCommand("copy");ok()})}catch(e){ta.select();try{document.execCommand("copy");ok()}catch(_){}}
+  };
+}
+
+/* ---------- painel da organização ---------- */
+async function resolverPerfis(){
+  if(!user)return;var ids=parts.map(function(p){return p.id}).concat(time.map(function(t){return t.uid}).filter(Boolean)).filter(function(id){return !perfis[id]});if(!ids.length)return;
+  var r=await user.profiles(ids);Object.keys(r).forEach(function(k){perfis[k]=r[k]});renderGrade(true);renderCorrida();
+}
+
+/* ---------- abas ---------- */
+var primeiraAba=true;var ABAS=["premio","funciona","briefing","participar","time"];
+function mostrar(){
+  var h=decodeURIComponent(location.hash.slice(1)),aba=h==="inscricao"?"participar":(ABAS.indexOf(h)>=0?h:"premio");
+  Array.prototype.forEach.call(document.querySelectorAll("[data-aba]"),function(el){el.classList.toggle("ativa",el.getAttribute("data-aba")===aba)});
+  Array.prototype.forEach.call(document.querySelectorAll(".abas a"),function(a){if(a.getAttribute("href")==="#"+aba){a.setAttribute("aria-current","page");a.scrollIntoView({block:"nearest",inline:"nearest"})}else a.removeAttribute("aria-current")});
+  if(h==="inscricao")$("inscricao").scrollIntoView({block:"start"});
+  else if(h==="inicio"||!h)window.scrollTo(0,0);
+  else{var cel=window.innerWidth<760,nb=document.querySelector(".abas"),off=cel?60:72,topo=nb.getBoundingClientRect().top+window.scrollY-off;if(cel&&!primeiraAba)window.scrollTo(0,Math.max(0,topo));else if(window.scrollY>topo)window.scrollTo(0,topo);else if(ABAS.indexOf(h)>=0)window.scrollTo(0,Math.min(window.scrollY,topo));}primeiraAba=false;
+}
+window.addEventListener("hashchange",mostrar);mostrar();
+
+/* ---------- início ---------- */
+renderDatas();renderGrade();renderCorrida();
+(async function(){
+  try{user=await claude.use("user")}catch(e){}
+  try{db=await claude.use("db")}catch(e){}
+  try{assets=await claude.use("assets")}catch(e){}
+  if(user){try{me=await user.me()}catch(e){}try{souEditor=await user.canEdit()}catch(e){}try{if((await user.can("data.write"))===false)semAcesso=true}catch(e){}}
+  if(!db){renderForm();return}
+  var t=setTimeout(renderForm,10000);
+  db.collection("participantes").onSnapshot(function(s){
+    clearTimeout(t);
+    parts=s.docs.filter(function(d){return d.exists}).map(function(d){var x=d.data();return{id:d.id,pessoa:x.pessoa,area:x.area,anuncio:x.anuncio,msg:x.msg,anuncios:Array.isArray(x.anuncios)?x.anuncios:null,fotoId:x.fotoId,recorteId:x.recorteId,criadoEm:x.criadoEm}});
+    renderGrade();renderCorrida();
+    var f=document.activeElement;if(!(f&&f.closest&&f.closest("#form-corpo"))&&!fotoNova)renderForm();
+    resolverPerfis();
+  },function(){clearTimeout(t);renderForm()});
+  db.doc("corrida/estado").onSnapshot(function(s){estado=s.exists?s.data():null;renderCorrida()},function(){});
+  db.doc("time/lista").onSnapshot(function(s){time=(s.exists&&s.data().pessoas)||[];renderGrade(true);renderCorrida();resolverPerfis();vincularTime();var f=document.activeElement;if(!(f&&f.closest&&f.closest("#form-corpo")))renderForm()},function(){});
+  if(me&&me.id){try{var v=await db.doc("videos/"+me.id).get();if(v.exists){var vd=v.data();meuVideo=vd.drive;meusItens=Array.isArray(vd.itens)?vd.itens:[];renderForm()}}catch(e){}}
+})();
+</script>
+</body>
+</html>
