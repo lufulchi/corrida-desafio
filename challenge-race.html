@@ -707,7 +707,13 @@ function renderCorrida(){
   if(D.demo)ph.push('<span class="selo">prévia com dados de exemplo</span>');
   else if(semDados)ph.push('<span class="selo">aguardando a largada</span>');
   else ph.push('<span class="vivo">ao vivo</span>');
-  if(!D.demo&&CORRIDA.atualizadoEm)ph.push('<span>atualizado em '+esc(new Date(CORRIDA.atualizadoEm).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}))+'</span>');
+  if(!D.demo&&CORRIDA.atualizadoEm){
+    // a rotina republica no minuto 40 de cada hora e leva ~2-5 min: a próxima versão chega por volta do minuto 45
+    var prox=new Date();prox.setMinutes(45,0,0);if(prox<=new Date())prox.setHours(prox.getHours()+1);
+    var fimCorrida=dia(CONFIG.fim);if(fimCorrida)fimCorrida.setHours(23,59,59,0);
+    ph.push('<span>atualizado em '+esc(new Date(CORRIDA.atualizadoEm).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}))+
+      (fimCorrida&&new Date()>fimCorrida?'':' · próxima atualização por volta das '+esc(prox.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"})))+'</span>');
+  }
   if(CORRIDA&&CORRIDA.pessoas&&CORRIDA.pessoas.length&&!semDados)ph.push('<button id="bt-previa">'+(previa?"voltar para a corrida real":"ver prévia")+'</button>');
   var nDias=rows.reduce(function(m,r){return Math.max(m,r.serie.length)},0);
   if(nDias>1)ph.push('<button id="bt-replay">'+(pista.rodando?"■ parar":"▶ rever a corrida")+'</button>');
