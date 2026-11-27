@@ -58,3 +58,24 @@
 .placa-fixa.p1{background:var(--amarelo);color:#000}.placa-fixa.p1 i{color:#333}
 .ch.top .placa{display:none}
 @media(max-width:600px){.placa-fixa{font-size:11px}}
+/* arrastar a pista inteira (0 a 1.000) */
+.turfe-scroll{overflow-x:auto;overflow-y:hidden;cursor:grab;scrollbar-width:thin;scrollbar-color:#3d8a4a #0b1f0e;-webkit-overflow-scrolling:touch;outline:none}
+.turfe-scroll.arrastando{cursor:grabbing;user-select:none}
+.turfe-scroll .turfe{min-width:100%}
+.turfe-chegada{right:auto}
+.turfe-chegada b{position:absolute;top:8px;left:30px;white-space:nowrap;color:#fff;font-size:13px;font-weight:900;background:rgba(0,0,0,.55);padding:3px 10px;border-radius:999px}
+.turfe-topo .dica{font-weight:700;color:#fff}
+/* fotos maiores */
+.ch .escudo{left:22%;top:30%;width:40%;height:44%}
+.ch .escudo .adesivo img,.ch .escudo .adesivo .ini{border-width:3px}
+.ch .escudo .adesivo .ini{font-size:13px}
+.lista li{grid-template-columns:28px 54px 1fr auto auto}
+.lista .r{width:54px;height:54px}
+.lista .r .adesivo .ini{font-size:15px}
+/* setinhas de posição */
+.mov{min-width:38px;text-align:center;font-size:13px;font-weight:900;font-variant-numeric:tabular-nums;border-radius:999px;padding:3px 6px}
+.mov.sobe{color:#00BF63;background:rgba(0,191,99,.12)}
+.mov.desce{color:#ff5b5b;background:rgba(255,91,91,.12)}
+.mov.igual{color:var(--c-muted)}
+.lista-tit .leg{margin-left:auto;font-size:13px}
+@media(max-width:600px){.lista li{grid-template-columns:22px 44px 1fr auto auto;gap:8px;padding:8px 10px 8px 6px}.lista .r{width:44px;height:44px}.mov{min-width:32px;font-size:12px}}
