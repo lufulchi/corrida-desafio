@@ -1,0 +1,54 @@
+/* ---------- prévia #nova: pista única com pelotão + lista ---------- */
+.corrida2 .placar{margin-bottom:22px}
+.turfe-wrap{border-radius:24px;overflow:hidden;border:2px solid #1d3b22;background:#0f2a14}
+.turfe-topo{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 18px;background:#0b1f0e;color:#bfe3c4;font-size:14px}
+.turfe-meta{font-weight:800;color:var(--amarelo)}
+.turfe{position:relative;height:var(--th,470px);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.9) 0 3px,transparent 3px calc(100% - 3px),rgba(255,255,255,.9) calc(100% - 3px)),
+    repeating-linear-gradient(90deg,#1f6b2c 0 60px,#237733 60px 120px);
+  transition:height .5s ease}
+.turfe::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,0) 35%,rgba(0,0,0,0) 70%,rgba(0,0,0,.18));pointer-events:none}
+.turfe-marcas{position:absolute;inset:0}
+.turfe-marcas span{position:absolute;top:0;bottom:0;border-left:2px dashed rgba(255,255,255,.28)}
+.turfe-marcas b{position:absolute;top:8px;left:6px;font-size:13px;font-weight:800;color:rgba(255,255,255,.85);white-space:nowrap}
+.turfe-chegada{position:absolute;top:3px;bottom:3px;right:14px;width:22px;background:repeating-conic-gradient(#fff 0 25%,#111 0 50%) 0 0/11px 11px;box-shadow:0 0 0 3px rgba(0,0,0,.25)}
+.turfe-chegada.longe{width:auto;background:none;box-shadow:none;top:auto;bottom:12px;right:12px;color:#fff;font-weight:900;font-size:14px;padding:6px 12px;border-radius:999px;background:rgba(0,0,0,.55)}
+.turfe-bando{position:absolute;inset:0}
+.ch{position:absolute;left:0;top:0;width:var(--cw,92px);height:calc(var(--cw,92px) * .9);transform-origin:50% 100%;transition:transform 1s cubic-bezier(.3,.1,.2,1);cursor:default;outline:none}
+.ch svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 6px 4px rgba(0,0,0,.35))}
+.ch .escudo{position:absolute;left:31%;top:44%;width:24%;height:27%;z-index:2}
+.ch .escudo .adesivo img,.ch .escudo .adesivo .ini{border-width:2px}
+.ch .escudo .adesivo .ini{font-size:9px}
+.ch .escudo .adesivo img.recorte{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0 0 #fff) drop-shadow(0 1px 0 #fff) drop-shadow(0 -1px 0 #fff);object-position:center top}
+.ch .placa{position:absolute;left:50%;top:100%;transform:translate(-50%,2px);white-space:nowrap;background:#000;color:#fff;font-size:12px;font-weight:800;padding:2px 9px;border-radius:999px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:3}
+.ch .placa i{font-style:normal;font-weight:400;color:#cfcfcf;margin-left:4px}
+.ch.top .placa,.ch:hover .placa,.ch:focus .placa{opacity:1}
+.ch.top1 .placa{background:var(--amarelo);color:#000}.ch.top1 .placa i{color:#333}
+.ch .eq2{animation:galope .5s ease-in-out infinite}
+.ch:nth-child(3n) .eq2{animation-delay:-.17s}.ch:nth-child(3n+1) .eq2{animation-delay:-.33s}
+@keyframes galope{50%{transform:translateY(-3px)}}
+.ch .pa,.ch .pb{animation:pata2 .5s linear infinite;transform-box:fill-box;transform-origin:50% 0}
+.ch .pb{animation-direction:reverse}
+@keyframes pata2{0%,100%{transform:rotate(-18deg)}50%{transform:rotate(18deg)}}
+@media (prefers-reduced-motion:reduce){.ch .eq2,.ch .pa,.ch .pb{animation:none}}
+
+.lista-tit{display:flex;align-items:baseline;gap:12px;margin:34px 0 12px}
+.lista-tit b{font-size:clamp(24px,3vw,32px);font-weight:900;letter-spacing:-.03em}
+.lista-tit span{color:var(--c-muted);font-size:15px}
+.lista{list-style:none;display:grid;gap:8px 18px;counter-reset:l}
+@media(min-width:860px){.lista{grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:repeat(var(--linhas,12),auto)}}
+.lista li{display:grid;grid-template-columns:28px 40px 1fr auto;align-items:center;gap:10px;background:var(--c-soft);border-radius:14px;padding:8px 14px 8px 10px}
+.lista .n{font-weight:900;color:var(--c-muted);text-align:right;font-variant-numeric:tabular-nums}
+.lista li:first-child .n{color:var(--amarelo)}
+.lista .r{width:40px;height:40px}
+.lista .r .adesivo img,.lista .r .adesivo .ini{border-width:2px;border-color:#2b2b2b}
+.lista .r .adesivo .ini{font-size:12px}
+.lista .q{min-width:0}
+.lista .q b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lista .q .bar{display:block;height:5px;border-radius:99px;background:#262626;margin-top:5px;overflow:hidden}
+.lista .q .bar i{display:block;height:100%;background:var(--grad);border-radius:99px}
+.lista .v{text-align:right;font-variant-numeric:tabular-nums;line-height:1.1}
+.lista .v b{display:block;font-size:18px;font-weight:900}
+.lista .v span{font-size:12px;color:var(--c-muted)}
+@media(max-width:600px){.turfe-topo{font-size:12px;padding:10px 12px}.ch .placa{font-size:11px}}

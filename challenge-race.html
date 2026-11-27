@@ -314,6 +314,60 @@ footer img{width:72px;height:auto}
 .hero[data-aba].ativa{display:flex}
 .corrida{padding-top:40px}
 @media(max-width:759px){.corrida{padding-top:24px}}
+/* ---------- prévia #nova: pista única com pelotão + lista ---------- */
+.corrida2 .placar{margin-bottom:22px}
+.turfe-wrap{border-radius:24px;overflow:hidden;border:2px solid #1d3b22;background:#0f2a14}
+.turfe-topo{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 18px;background:#0b1f0e;color:#bfe3c4;font-size:14px}
+.turfe-meta{font-weight:800;color:var(--amarelo)}
+.turfe{position:relative;height:var(--th,470px);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.9) 0 3px,transparent 3px calc(100% - 3px),rgba(255,255,255,.9) calc(100% - 3px)),
+    repeating-linear-gradient(90deg,#1f6b2c 0 60px,#237733 60px 120px);
+  transition:height .5s ease}
+.turfe::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,0) 35%,rgba(0,0,0,0) 70%,rgba(0,0,0,.18));pointer-events:none}
+.turfe-marcas{position:absolute;inset:0}
+.turfe-marcas span{position:absolute;top:0;bottom:0;border-left:2px dashed rgba(255,255,255,.28)}
+.turfe-marcas b{position:absolute;top:8px;left:6px;font-size:13px;font-weight:800;color:rgba(255,255,255,.85);white-space:nowrap}
+.turfe-chegada{position:absolute;top:3px;bottom:3px;right:14px;width:22px;background:repeating-conic-gradient(#fff 0 25%,#111 0 50%) 0 0/11px 11px;box-shadow:0 0 0 3px rgba(0,0,0,.25)}
+.turfe-chegada.longe{width:auto;background:none;box-shadow:none;top:auto;bottom:12px;right:12px;color:#fff;font-weight:900;font-size:14px;padding:6px 12px;border-radius:999px;background:rgba(0,0,0,.55)}
+.turfe-bando{position:absolute;inset:0}
+.ch{position:absolute;left:0;top:0;width:var(--cw,92px);height:calc(var(--cw,92px) * .9);transform-origin:50% 100%;transition:transform 1s cubic-bezier(.3,.1,.2,1);cursor:default;outline:none}
+.ch svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 6px 4px rgba(0,0,0,.35))}
+.ch .escudo{position:absolute;left:31%;top:44%;width:24%;height:27%;z-index:2}
+.ch .escudo .adesivo img,.ch .escudo .adesivo .ini{border-width:2px}
+.ch .escudo .adesivo .ini{font-size:9px}
+.ch .escudo .adesivo img.recorte{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0 0 #fff) drop-shadow(0 1px 0 #fff) drop-shadow(0 -1px 0 #fff);object-position:center top}
+.ch .placa{position:absolute;left:50%;top:100%;transform:translate(-50%,2px);white-space:nowrap;background:#000;color:#fff;font-size:12px;font-weight:800;padding:2px 9px;border-radius:999px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:3}
+.ch .placa i{font-style:normal;font-weight:400;color:#cfcfcf;margin-left:4px}
+.ch.top .placa,.ch:hover .placa,.ch:focus .placa{opacity:1}
+.ch.top1 .placa{background:var(--amarelo);color:#000}.ch.top1 .placa i{color:#333}
+.ch .eq2{animation:galope .5s ease-in-out infinite}
+.ch:nth-child(3n) .eq2{animation-delay:-.17s}.ch:nth-child(3n+1) .eq2{animation-delay:-.33s}
+@keyframes galope{50%{transform:translateY(-3px)}}
+.ch .pa,.ch .pb{animation:pata2 .5s linear infinite;transform-box:fill-box;transform-origin:50% 0}
+.ch .pb{animation-direction:reverse}
+@keyframes pata2{0%,100%{transform:rotate(-18deg)}50%{transform:rotate(18deg)}}
+@media (prefers-reduced-motion:reduce){.ch .eq2,.ch .pa,.ch .pb{animation:none}}
+
+.lista-tit{display:flex;align-items:baseline;gap:12px;margin:34px 0 12px}
+.lista-tit b{font-size:clamp(24px,3vw,32px);font-weight:900;letter-spacing:-.03em}
+.lista-tit span{color:var(--c-muted);font-size:15px}
+.lista{list-style:none;display:grid;gap:8px 18px;counter-reset:l}
+@media(min-width:860px){.lista{grid-template-columns:1fr 1fr;grid-auto-flow:column;grid-template-rows:repeat(var(--linhas,12),auto)}}
+.lista li{display:grid;grid-template-columns:28px 40px 1fr auto;align-items:center;gap:10px;background:var(--c-soft);border-radius:14px;padding:8px 14px 8px 10px}
+.lista .n{font-weight:900;color:var(--c-muted);text-align:right;font-variant-numeric:tabular-nums}
+.lista li:first-child .n{color:var(--amarelo)}
+.lista .r{width:40px;height:40px}
+.lista .r .adesivo img,.lista .r .adesivo .ini{border-width:2px;border-color:#2b2b2b}
+.lista .r .adesivo .ini{font-size:12px}
+.lista .q{min-width:0}
+.lista .q b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lista .q .bar{display:block;height:5px;border-radius:99px;background:#262626;margin-top:5px;overflow:hidden}
+.lista .q .bar i{display:block;height:100%;background:var(--grad);border-radius:99px}
+.lista .v{text-align:right;font-variant-numeric:tabular-nums;line-height:1.1}
+.lista .v b{display:block;font-size:18px;font-weight:900}
+.lista .v span{font-size:12px;color:var(--c-muted)}
+@media(max-width:600px){.turfe-topo{font-size:12px;padding:10px 12px}.ch .placa{font-size:11px}}
 </style>
 </head>
 <body>
@@ -449,6 +503,24 @@ footer img{width:72px;height:auto}
 </section>
 
 
+
+<section class="corrida corrida2" id="nova" data-aba="nova">
+  <div class="wrap">
+    <div class="tit"><h2>a <em>corrida.</em></h2><p>quantos leitores cada pessoa já trouxe com os seus anúncios. quem cruzar a linha de chegada garante as 3 latas.</p></div>
+    <div class="placar" id="n-placar"></div>
+    <div class="turfe-wrap">
+      <div class="turfe-topo"><span id="n-escala"></span><span class="turfe-meta" id="n-meta"></span></div>
+      <div class="turfe" id="n-turfe" role="img" aria-label="corrida de cavalinhos: cada cavalo é uma pessoa e anda conforme os leitores que trouxe">
+        <div class="turfe-marcas" id="n-marcas"></div>
+        <div class="turfe-chegada" id="n-chegada" aria-hidden="true"></div>
+        <div class="turfe-bando" id="n-bando"></div>
+      </div>
+    </div>
+    <div class="lista-tit"><b>todo mundo</b><span id="n-total"></span></div>
+    <ol class="lista" id="n-lista"></ol>
+    <p class="nota">a contagem são as inscrições que o Meta atribui a cada anúncio, em qualquer campanha em que ele estiver rodando. os números podem mudar um pouco ao longo do dia, porque o Meta leva algumas horas para atribuir cada inscrição ao anúncio certo.</p>
+  </div>
+</section>
 
 <footer><div class="wrap"><span>dúvidas? se for sobre como gravar o anúncio, fala com a Manu ou com a Gabi. se for sobre a mecânica, fala com a Lu.</span><img src="/_blob/b2c573c77ba6cd3c1cf9c0671a4c14af" alt="tns"></div></footer>
 
@@ -811,7 +883,7 @@ async function resolverPerfis(){
 /* ---------- abas ---------- */
 var ABAS=["corrida","desafio"],SECOES={premio:1,funciona:1,briefing:1,participar:1,time:1,inscricao:1,inicio:1};
 function mostrar(){
-  var h=decodeURIComponent(location.hash.slice(1)),aba=(h==="desafio"||SECOES[h])?"desafio":"corrida";
+  var h=decodeURIComponent(location.hash.slice(1)),aba=h==="nova"?"nova":(h==="desafio"||SECOES[h])?"desafio":"corrida";
   Array.prototype.forEach.call(document.querySelectorAll("[data-aba]"),function(el){el.classList.toggle("ativa",el.getAttribute("data-aba")===aba)});
   Array.prototype.forEach.call(document.querySelectorAll(".abas a"),function(a){if(a.getAttribute("href")==="#"+aba)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
   var el=SECOES[h]&&h!=="inicio"?$(h):null;
@@ -839,6 +911,112 @@ renderDatas();renderGrade();renderCorrida();
   db.doc("corrida/estado").onSnapshot(function(s){estado=s.exists?s.data():null;renderCorrida()},function(){});
   db.doc("time/lista").onSnapshot(function(s){time=(s.exists&&s.data().pessoas)||[];renderGrade(true);renderCorrida();resolverPerfis();vincularTime();var f=document.activeElement;if(!(f&&f.closest&&f.closest("#form-corpo")))renderForm()},function(){});
   if(me&&me.id){try{var v=await db.doc("videos/"+me.id).get();if(v.exists){var vd=v.data();meuVideo=vd.drive;meusItens=Array.isArray(vd.itens)?vd.itens:[];renderForm()}}catch(e){}}
+})();
+</script>
+<script>
+/* ---------- prévia #nova (bloco separado: se falhar, a corrida atual não é afetada) ----------
+   Pista única com todo mundo: zoom no líder (a régua vai até um pouco à frente de quem lidera; a chegada
+   aparece quando alguém se aproxima de 1.000) e pelotão (quem tem números parecidos vai para outra fileira).
+   Usa as variáveis da página: CORRIDA, CONFIG, time, parts, membroDoTime, rostoHtml, esc, mil, hashId, PELAGENS. */
+(function(){
+var MAXES=[100,150,200,250,300,400,500,600,750,1000];
+function escalaMax(lider,meta){var alvo=Math.max(80,lider*1.2);for(var i=0;i<MAXES.length;i++)if(MAXES[i]>=alvo)return Math.min(MAXES[i],meta);return meta}
+function cavalo2(cor,id){
+  var P=PELAGENS[(hashId(id)>>>3)%PELAGENS.length],c=P[0],s=P[1],m=P[2],f=P[3];
+  var perna=function(cls,x,tom){return '<g class="'+cls+'"><rect x="'+(x-3)+'" y="58" width="6" height="22" rx="3" fill="'+tom+'"/><rect x="'+(x-4.2)+'" y="77" width="8.4" height="5" rx="2" fill="#1a1a1a"/></g>'};
+  return '<svg viewBox="0 0 100 90" aria-hidden="true"><g class="eq2">'+
+    '<path d="M22 46 C8 42 4 58 10 72 C13 63 16 58 21 57 C18 64 20 70 24 74 C25 64 26 56 29 52 Z" fill="'+m+'"/>'+        // rabo
+    perna("pb",31,s)+perna("pa",58,s)+                                                                                  // pernas de trás
+    '<ellipse cx="45" cy="54" rx="25" ry="14" fill="'+c+'"/>'+                                                         // corpo
+    '<path d="M24 46 Q45 36 66 46 L66 60 Q45 70 24 60 Z" fill="'+cor+'"/>'+                                             // camisa
+    '<path d="M24 46 Q45 36 66 46 L66 49 Q45 40 24 49 Z" fill="#fff" opacity=".35"/>'+                                  // gola/brilho
+    '<path d="M58 47 Q64 34 70 26 L80 30 Q72 42 66 56 Z" fill="'+c+'"/>'+                                               // pescoço
+    perna("pa",36,c)+perna("pb",63,c)+                                                                                  // pernas da frente
+    // cabeça de frente (olhando para quem vê)
+    '<path d="M64 4 L67 15 L72 11 Z" fill="'+c+'"/><path d="M65.5 7 L67.4 13.5 L70.4 11.2 Z" fill="'+f+'"/>'+         // orelha esq.
+    '<path d="M92 4 L89 15 L84 11 Z" fill="'+c+'"/><path d="M90.5 7 L88.6 13.5 L85.6 11.2 Z" fill="'+f+'"/>'+         // orelha dir.
+    '<ellipse cx="78" cy="20" rx="13.5" ry="13" fill="'+c+'"/>'+                                                       // testa
+    '<path d="M71 9 Q74 2 78 7 Q81 1 85 8 Q82 9 80 12 Q78 9 76 12 Q74 9 71 9 Z" fill="'+m+'"/>'+                        // topete
+    '<ellipse cx="78" cy="32" rx="11.5" ry="8.5" fill="'+f+'"/>'+                                                      // focinho
+    '<ellipse cx="73.5" cy="30" rx="1.4" ry="1" fill="'+m+'"/><ellipse cx="82.5" cy="30" rx="1.4" ry="1" fill="'+m+'"/>'+ // narinas
+    '<path d="M71 33.5 Q78 41 85 33.5 Q78 36.5 71 33.5 Z" fill="#5a1f1f"/>'+                                            // boca sorrindo
+    '<rect x="75.6" y="34.6" width="2.3" height="3" rx=".6" fill="#fff"/><rect x="78.1" y="34.6" width="2.3" height="3" rx=".6" fill="#fff"/>'+ // dentões
+    '<circle cx="72.5" cy="18" r="4.6" fill="#fff"/><circle cx="83.5" cy="18" r="4.6" fill="#fff"/>'+                   // olhos
+    '<circle cx="73.2" cy="18.8" r="2.4" fill="#111"/><circle cx="82.8" cy="18.8" r="2.4" fill="#111"/>'+
+    '<circle cx="73.9" cy="17.9" r=".8" fill="#fff"/><circle cx="83.5" cy="17.9" r=".8" fill="#fff"/>'+
+    '<ellipse cx="68" cy="25" rx="2.2" ry="1.3" fill="#ff7a7a" opacity=".45"/><ellipse cx="88" cy="25" rx="2.2" ry="1.3" fill="#ff7a7a" opacity=".45"/>'+ // bochechas
+    '</g></svg>';
+}
+var nos={};
+function renderNova(){
+  var bando=document.getElementById("n-bando");if(!bando||!CORRIDA||!CORRIDA.pessoas||!CORRIDA.pessoas.length)return;
+  var meta=CONFIG.meta||1000;
+  var rows=CORRIDA.pessoas.map(function(p){
+    var membros=p.nomes.map(membroDoTime),s=(p.serie||[]).map(Number),v=s.length?s[s.length-1]:0;
+    return{id:p.id,membros:membros,nome:membros.length>1?membros.map(function(m){return primeiro(m.nome)}).join(" & "):membros[0].nome,v:v};
+  }).sort(function(a,b){return b.v-a.v||a.nome.localeCompare(b.nome,"pt-BR")});
+  var lider=rows[0].v,max=escalaMax(lider,meta);
+  // placar
+  var ph=['<span class="vivo">ao vivo</span>'];
+  if(CORRIDA.atualizadoEm)ph.push('<span>atualizado em '+esc(new Date(CORRIDA.atualizadoEm).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}))+'</span>');
+  document.getElementById("n-placar").innerHTML=ph.join("");
+  // tamanhos
+  var turfe=document.getElementById("n-turfe"),W=turfe.clientWidth||900,cel=W<600;
+  var cw=cel?66:100,ch=cw*.9,FILAS=cel?6:5,filaH=cel?54:80,topo=cel?26:34,margemD=cel?40:52;
+  var H=topo+FILAS*filaH+ch-filaH+30;turfe.style.setProperty("--th",H+"px");
+  var util=W-cw-margemD;
+  // marcas e chegada
+  var marcas=[.25,.5,.75].map(function(f){return Math.round(max*f)});
+  document.getElementById("n-marcas").innerHTML=marcas.map(function(m){var x=m/max*util+cw*.62;return '<span style="left:'+x+'px"><b>'+mil(m)+'</b></span>'}).join("");
+  var cheg=document.getElementById("n-chegada");
+  if(max>=meta){cheg.className="turfe-chegada";cheg.textContent=""}else{cheg.className="turfe-chegada longe";cheg.textContent="chegada em "+mil(meta)+" →"}
+  document.getElementById("n-escala").textContent=max>=meta?"reta final: a régua já vai até a linha de chegada":"a régua acompanha quem está na frente e cresce até "+mil(meta);
+  document.getElementById("n-meta").textContent="🏁 "+mil(meta)+" leitores = 3 latas";
+  // pelotão: cada cavalo vai para a fileira onde fica mais longe do último cavalo daquela fileira
+  var ultimo=[],gap=cw*.62;for(var r=0;r<FILAS;r++)ultimo.push(-1e9);
+  var vivos={};
+  rows.forEach(function(x,i){
+    var px=Math.min(1,x.v/max)*util,melhor=0,dist=-1;
+    for(var r=0;r<FILAS;r++){var d=Math.abs(ultimo[r]-px);if(d>=gap){melhor=r;dist=1e9;break}if(d>dist){dist=d;melhor=r}}
+    ultimo[melhor]=px;
+    var esc_=.84+.16*(melhor/(FILAS-1)),y=topo+melhor*filaH;
+    var el=nos[x.id];
+    if(!el){
+      el=document.createElement("div");el.className="ch";el.tabIndex=0;
+      el.innerHTML=cavalo2(corCavalo(x.id),x.id)+'<span class="escudo"></span><span class="placa"></span>';
+      el.style.transform="translate(0px,"+y+"px) scale("+esc_+")";
+      bando.appendChild(el);nos[x.id]=el;
+      requestAnimationFrame(function(){requestAnimationFrame(function(){el.style.transform=el.dataset.t})});
+    }
+    el.style.setProperty("--cw",cw+"px");
+    el.style.zIndex=(i<5?60:10)+melhor;
+    el.dataset.t="translate("+px+"px,"+y+"px) scale("+esc_+")";
+    el.style.transform=el.dataset.t;
+    el.classList.toggle("top",i<5);el.classList.toggle("top1",i===0&&x.v>0);
+    var m=x.membros[0];
+    var foto=x.membros.length>1?'<span class="dupla">'+x.membros.map(function(mm){return rostoHtml({nome:mm.nome,id:mm.id,recorteId:mm.recorteId,fotoId:mm.fotoId,demo:!mm.id})}).join("")+'</span>':rostoHtml({nome:m.nome,id:m.id,recorteId:m.recorteId,fotoId:m.fotoId,demo:!m.id});
+    var esc0=el.querySelector(".escudo");if(esc0.dataset.f!==foto){esc0.innerHTML=foto;esc0.dataset.f=foto}
+    el.querySelector(".placa").innerHTML=esc(x.nome)+'<i>'+mil(x.v)+'</i>';
+    el.setAttribute("aria-label",x.nome+": "+mil(x.v)+" leitores");
+    vivos[x.id]=1;
+  });
+  Object.keys(nos).forEach(function(id){if(!vivos[id]){nos[id].remove();delete nos[id]}});
+  // lista com todo mundo
+  var lista=document.getElementById("n-lista");lista.style.setProperty("--linhas",Math.ceil(rows.length/2));
+  lista.innerHTML=rows.map(function(x,i){
+    var m=x.membros[0],foto=x.membros.length>1?'<span class="dupla">'+x.membros.map(function(mm){return rostoHtml({nome:mm.nome,id:mm.id,recorteId:mm.recorteId,fotoId:mm.fotoId,demo:!mm.id})}).join("")+'</span>':rostoHtml({nome:m.nome,id:m.id,recorteId:m.recorteId,fotoId:m.fotoId,demo:!m.id});
+    return '<li><span class="n">'+(i+1)+'</span><span class="r">'+foto+'</span><span class="q"><b>'+esc(x.nome)+'</b><span class="bar"><i style="width:'+(Math.min(1,x.v/meta)*100).toFixed(1)+'%"></i></span></span>'+
+      '<span class="v"><b>'+mil(x.v)+'</b><span>'+(x.v>=meta?'bateu a meta ✓':'faltam '+mil(meta-x.v))+'</span></span></li>';
+  }).join("");
+  var total=rows.reduce(function(a,x){return a+x.v},0);
+  document.getElementById("n-total").textContent=rows.length+" corredores · "+mil(total)+" leitores no total";
+}
+window.renderNova=renderNova;
+var original=renderCorrida;
+renderCorrida=function(){original.apply(this,arguments);try{renderNova()}catch(e){}};
+try{renderNova()}catch(e){}
+var t=null;window.addEventListener("resize",function(){clearTimeout(t);t=setTimeout(function(){try{renderNova()}catch(e){}},150)});
+window.addEventListener("hashchange",function(){if(location.hash==="#nova")setTimeout(function(){try{renderNova()}catch(e){}},30)});
 })();
 </script>
 </body>

@@ -31,13 +31,20 @@ sub('</style>', '.hero[data-aba]:not(.ativa){display:none!important}\n.hero[data
 trocar('var primeiraAba=true;', 'window.addEventListener("hashchange",mostrar);mostrar();',
   'var ABAS=["corrida","desafio"],SECOES={premio:1,funciona:1,briefing:1,participar:1,time:1,inscricao:1,inicio:1};\n' +
   'function mostrar(){\n' +
-  '  var h=decodeURIComponent(location.hash.slice(1)),aba=(h==="desafio"||SECOES[h])?"desafio":"corrida";\n' +
+  '  var h=decodeURIComponent(location.hash.slice(1)),aba=h==="nova"?"nova":(h==="desafio"||SECOES[h])?"desafio":"corrida";\n' +
   '  Array.prototype.forEach.call(document.querySelectorAll("[data-aba]"),function(el){el.classList.toggle("ativa",el.getAttribute("data-aba")===aba)});\n' +
   '  Array.prototype.forEach.call(document.querySelectorAll(".abas a"),function(a){if(a.getAttribute("href")==="#"+aba)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});\n' +
   '  var el=SECOES[h]&&h!=="inicio"?$(h):null;\n' +
   '  if(el)requestAnimationFrame(function(){el.scrollIntoView({block:"start"})});else window.scrollTo(0,0);\n' +
   '  if(aba==="corrida")renderCorrida();\n' +
   '}\n', 'navegação');
+// ---- prévia #nova (27/11, para a Luiza aprovar): fora do menu, só abre por #nova. Script em bloco próprio.
+if (fs.existsSync(path.join(aqui, 'race2.js'))) {
+  sub('<footer>', ler('race2-section.html').trimEnd() + '\n\n<footer>', 'prévia: seção');
+  sub('</style>', ler('race2.css') + '</style>', 'prévia: estilo');
+  const fimBody = h.lastIndexOf('</body>');
+  h = h.slice(0, fimBody) + '<script>\n' + ler('race2.js') + '</script>\n' + h.slice(fimBody);
+}
 const dados = fs.existsSync(path.join(aqui, '../corrida.json')) ? ler('../corrida.json').trim() : '{"atualizadoEm":null,"dias":[],"pessoas":[]}';
 JSON.parse(dados);
 h = h.replace(/\/\*CORRIDA-INICIO\*\/[\s\S]*?\/\*CORRIDA-FIM\*\//, () => '/*CORRIDA-INICIO*/' + dados + '/*CORRIDA-FIM*/');
