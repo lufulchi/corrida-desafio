@@ -309,6 +309,10 @@ html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 140px)}
 footer{border-top:20px solid transparent;border-image:var(--grad) 1;padding:40px 0}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-weight:300}
 footer img{width:72px;height:auto}
+.hero[data-aba]:not(.ativa){display:none!important}
+.hero[data-aba].ativa{display:flex}
+.corrida{padding-top:40px}
+@media(max-width:759px){.corrida{padding-top:24px}}
 </style>
 </head>
 <body>
@@ -316,11 +320,11 @@ footer img{width:72px;height:auto}
 <header class="nav">
   <div class="wrap">
     <a class="logo" href="#inicio" aria-label="the news"><img class="logo-claro" src="/_blob/1fa143a58eb242285f9e7b522673ceb9" alt="the news"><img class="logo-escuro" src="/_blob/cb0cf8af1319aa80cbc08d3d6a3c826a" alt="the news"></a>
-    <a class="btn main" href="#inscricao">quero participar</a>
+    
   </div>
 </header>
 
-<div class="hero" id="inicio">
+<div class="hero" id="inicio" data-aba="desafio">
   <div class="wrap">
     <div>
       <h1>super team creator challenge.</h1>
@@ -336,15 +340,11 @@ footer img{width:72px;height:auto}
 </div>
 
 <nav class="abas" aria-label="seções"><div class="wrap">
-  <a href="#premio">o prêmio</a>
-  <a href="#funciona">como funciona</a>
-  <a href="#briefing">briefing</a>
-  <a href="#participar">como participar</a>
-  <a href="#time">o time</a>
   <a href="#corrida">a corrida 🏁</a>
+  <a href="#desafio">o desafio</a>
 </div></nav>
 
-<section class="premio" id="premio" data-aba="premio">
+<section class="premio" id="premio" data-aba="desafio">
   <div class="wrap">
     <div class="grid">
       <div>
@@ -363,7 +363,7 @@ footer img{width:72px;height:auto}
   </div>
 </section>
 
-<section id="funciona" data-aba="funciona">
+<section id="funciona" data-aba="desafio">
   <div class="wrap">
     <div class="tit"><h2>como funciona.</h2><p>você não precisa entender de tráfego pago. é só gravar, que a gente cuida do resto.</p></div>
     <div class="funciona">
@@ -378,7 +378,7 @@ footer img{width:72px;height:auto}
   </div>
 </section>
 
-<section id="briefing" data-aba="briefing">
+<section id="briefing" data-aba="desafio">
   <div class="wrap">
     <div class="tit"><h2>briefing.</h2><p>antes de gravar, dá uma olhada no que um anúncio precisa ter.</p></div>
     <ul class="regras">
@@ -407,7 +407,7 @@ footer img{width:72px;height:auto}
   </div>
 </section>
 
-<section id="participar" data-aba="participar">
+<section id="participar" data-aba="desafio">
   <div class="wrap">
     <div class="tit"><h2>como participar.</h2><p>você só precisa do celular e de alguns minutos.</p></div>
     <ol class="passos">
@@ -424,7 +424,7 @@ footer img{width:72px;height:auto}
   </div>
 </section>
 
-<section id="time" data-aba="time">
+<section id="time" data-aba="desafio">
   <div class="wrap">
     <div class="tit"><h2>o time.</h2><p id="qtd">aqui fica todo mundo do the news, e dá para ver quem já mandou anúncio.</p></div>
     <div class="contador" id="contador"></div>
@@ -788,14 +788,14 @@ async function resolverPerfis(){
 }
 
 /* ---------- abas ---------- */
-var primeiraAba=true;var ABAS=["premio","funciona","briefing","participar","time","corrida"];
+var ABAS=["corrida","desafio"],SECOES={premio:1,funciona:1,briefing:1,participar:1,time:1,inscricao:1,inicio:1};
 function mostrar(){
-  var h=decodeURIComponent(location.hash.slice(1)),aba=h==="inscricao"?"participar":(ABAS.indexOf(h)>=0?h:"premio");
+  var h=decodeURIComponent(location.hash.slice(1)),aba=(h==="desafio"||SECOES[h])?"desafio":"corrida";
   Array.prototype.forEach.call(document.querySelectorAll("[data-aba]"),function(el){el.classList.toggle("ativa",el.getAttribute("data-aba")===aba)});
-  Array.prototype.forEach.call(document.querySelectorAll(".abas a"),function(a){if(a.getAttribute("href")==="#"+aba){a.setAttribute("aria-current","page");a.scrollIntoView({block:"nearest",inline:"nearest"})}else a.removeAttribute("aria-current")});
-  if(h==="inscricao")$("inscricao").scrollIntoView({block:"start"});
-  else if(h==="inicio"||!h)window.scrollTo(0,0);
-  else{var cel=window.innerWidth<760,nb=document.querySelector(".abas"),off=cel?60:72,topo=nb.getBoundingClientRect().top+window.scrollY-off;if(cel&&!primeiraAba)window.scrollTo(0,Math.max(0,topo));else if(window.scrollY>topo)window.scrollTo(0,topo);else if(ABAS.indexOf(h)>=0)window.scrollTo(0,Math.min(window.scrollY,topo));}primeiraAba=false;
+  Array.prototype.forEach.call(document.querySelectorAll(".abas a"),function(a){if(a.getAttribute("href")==="#"+aba)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  var el=SECOES[h]&&h!=="inicio"?$(h):null;
+  if(el)requestAnimationFrame(function(){el.scrollIntoView({block:"start"})});else window.scrollTo(0,0);
+  if(aba==="corrida")renderCorrida();
 }
 window.addEventListener("hashchange",mostrar);mostrar();
 
